@@ -1,0 +1,25 @@
+{
+  "name": "Backend-kusuma",
+  "version": "1.0.0",
+  "description": "Backend online shop kusuma",
+  "author": "hhandri26",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@mdi/font": "^5.3.45",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "nuxt": "^2.0.0",
+    "nuxt-material-design-icons": "^1.0.4",
+    "vue-chartist": "^2.3.0",
+    "vue-numeric": "^2.3.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0"
+  }
+}
