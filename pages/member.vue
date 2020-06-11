@@ -18,7 +18,7 @@
       <v-app id="inspire">
         <v-card>
           <v-card-title>
-            Produk
+            List Dokter
             <v-spacer></v-spacer>
             <v-text-field
               v-model="search"
@@ -43,7 +43,7 @@
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="500px">
                     <template v-slot:activator="{ on }">
-                        <v-btn color="primary" dark class="mb-2" v-on="on"> Produk Baru</v-btn>
+                        <v-btn color="primary" dark class="mb-2" v-on="on"> Tambah Baru</v-btn>
                     </template>
                     <v-card>
                         <v-card-title>
@@ -53,59 +53,57 @@
                         <v-card-text>
                         <v-container>
                             <v-row>
+                               
+                               
+                                <v-col cols="12" >
+                                    <v-text-field v-model="editedItem.first_name" label="Nama Awal"></v-text-field>
+                                </v-col>
+                                 <v-col cols="12" >
+                                    <v-text-field v-model="editedItem.last_name" label="Nama Akhir"></v-text-field>
+                                </v-col>
+                                 <v-col cols="12" >
+                                    <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+                                </v-col>
+                                 <v-col cols="12" >
+                                    <v-text-field v-model="editedItem.phone_number" label="Nomor Tlpn"></v-text-field>
+                                </v-col>
+                                 <v-col cols="12" >
+                                    <v-text-field v-model="editedItem.password" label="Password"></v-text-field>
+                                </v-col>
                                 <v-col cols="12">
-                                    <input ref="image" class="hide-input" type="file" accept="image/*"  @change="uploadfile">
-                                </v-col>
-                                <!-- <v-col cols="12">
-                                    <v-img
-                                        :src="editedItem.product_img"
-                                        aspect-ratio="1"
-                                        class="grey lighten-2"
-                                        >
-                                       
-                                    </v-img>
-                                </v-col> -->
-                                <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.product_name" label="Nama Produk"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.product_code" label="Kode Produk"></v-text-field>
-                                </v-col>
-                                <v-col cols="12"  >
-                                
-                                       <v-autocomplete
-                                        v-model="editedItem.product_category_id"
-                                        :items="category"
-                                       
+                                      <v-autocomplete
+                                        v-model="editedItem.provinsi_id"
+                                        :items="province"
                                         color="blue"
                                         hide-no-data
                                         hide-selected
-                                        item-text="product_category_name"
-                                        item-value="id"
-                                        label="Kategori Produk"
+                                        item-text="province"
+                                        item-value="province_id"
+                                        label="Provinsi"
+                                        @change="get_city()"
                                     ></v-autocomplete>
-                                    
-                               
+
+                                </v-col>
+                                <v-col cols="12">
+                                      <v-autocomplete
+                                        v-model="editedItem.kota_id"
+                                        :items="city"
+                                        color="blue"
+                                        hide-no-data
+                                        hide-selected
+                                        item-text="city_name"
+                                        item-value="city_id"
+                                        label="Kota"
+                                    ></v-autocomplete>
+
                                 </v-col>
                                  <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.product_description" label="Deskripsi Produk"></v-text-field>
+                                    <v-text-field v-model="editedItem.address" label="Alamat"></v-text-field>
                                 </v-col>
                                 
-                                <v-col cols="12">
-                                   <vue-numeric  v-model="editedItem.product_price" placeholder="Harga Produk"  currency="Rp" separator="," :precision="2" ></vue-numeric>
-                                </v-col>
-                                <v-col cols="12">
-                                   <vue-numeric  v-model="editedItem.product_tax" placeholder="Pajak"  currency="Rp" separator="," :precision="2" ></vue-numeric>
-                                </v-col>
-                                <v-col cols="12">
-                                   <v-switch
-                                    v-model="status"
-                                    label="Aktif ?"
-                                  ></v-switch>
-                                </v-col>
-                                 <v-col cols="12">
-                                   <vue-numeric  v-model="editedItem.product_weight" placeholder="Berat"  currency="" separator="," :precision="2" ></vue-numeric>
-                                </v-col>
+                               
+                               
+                                
                            
                           
                             
@@ -157,11 +155,12 @@ import VueNumeric from 'vue-numeric'
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('product');
-    let category = await axios.get('product/catagories');
+    let data       = await axios.get('member');
+    let province   = await axios.get('ongkir/province');
+    let parse      = JSON.parse(province.data.values);
       return {
         data:data.data.values,
-        category:category.data.values
+        province:parse.rajaongkir.results,
       }
        
     },
@@ -174,30 +173,29 @@ export default {
              editedIndex: -1,
              file: '',
              status:'',
+             city:[],
             editedItem: {
                 id:'',
-                product_name: '',
-                product_code: '',
-                product_category_id:'',
-                product_img:'',
-                product_description:'',
-                product_price:'',
-                product_tax:'',
-                product_status:'',
-                product_weight:''
+                first_name: '',
+                last_name: '',
+                email:'',
+                phone_number: '',
+                password:'',
+                provinsi_id: '',
+                kota_id:'',
+                address:''
                 
             },
             defaultItem: {
                 id:'',
-                product_name: '',
-                product_code: '',
-                product_category_id:'',
-                product_img:'',
-                product_description:'',
-                product_price:'',
-                product_tax:'',
-                product_status:'',
-                product_weight:''
+                first_name: '',
+                last_name: '',
+                email:'',
+                phone_number: '',
+                password:'',
+                provinsi_id: '',
+                kota_id:'',
+                address:''
             },
             multiLine: true,
             snackbar: false,
@@ -208,18 +206,15 @@ export default {
           search: '',
           headers: [
             {
-              text: 'Produk',
+              text: 'Nama Member',
               align: 'start',
               sortable: false,
-              value: 'product_name',
+              value: 'first_name',
             },
-            { text: 'Kode Produk', value: 'product_code' },
-            { text: 'Harga Produk', value: 'product_price' },
-            { text: 'Pajak', value: 'product_tax' },
-            { text: 'Status', value: 'product_status' },
-            { text: 'Berat', value: 'product_weight' },
-            
-             { text: 'Actions', value: 'actions', sortable: false },
+            { text: 'Nama Akhir', value: 'last_name' },
+            { text: 'Email', value: 'email' },
+             { text: 'Nomor Tlp', value: 'phone_number' },
+            { text: 'Actions', value: 'actions', sortable: false },
             
 
           ],
@@ -242,6 +237,20 @@ export default {
     created(){
     },
     methods: {
+        get_city(){
+            axios.post('ongkir/city',{provinsi_id:this.editedItem.provinsi_id})
+            .then(res => {
+       
+                    let parse      = JSON.parse(res.data.values);
+                             console.log(parse.rajaongkir.results)
+                    this.city = parse.rajaongkir.results;
+               
+                
+            }).catch(err => {
+            console.log(err);
+            })
+
+        },
         uploadfile(){
             this.file = this.$refs.image.files[0];
             let formData = new FormData();
@@ -254,7 +263,7 @@ export default {
 
             axios.post('upload_file',formData,{headers: headers})
             .then(res => {
-                  this.editedItem.product_img   = res.data[0].mediaSource;                
+                  this.editedItem.doctor_avatar = res.data[0].mediaSource;                
             }).catch(err => {
             console.log(err);
             })
@@ -269,7 +278,7 @@ export default {
         var item = {
           id:id
         };
-          this.$store.dispatch('product_delete', {item}).then((res) => {
+          this.$store.dispatch('member_delete', {item}).then((res) => {
                 
                 if(res == 200){
                    this.notif_color ='blue';
@@ -293,14 +302,8 @@ export default {
       },
       save () {
         var item = this.editedItem;
-        if(this.status == true){
-          this.editedItem.product_status = 'Active'
-        }else{
-          this.editedItem.product_status = 'Not Active'
-
-        }
         if (this.editedIndex > -1) {
-           this.$store.dispatch('product_update', {item}).then((res) => {
+           this.$store.dispatch('member_update', {item}).then((res) => {
                 
                 if(res == 200){
                     this.notif_color ='blue';
@@ -312,7 +315,7 @@ export default {
          
         } else {
             
-            this.$store.dispatch('product_save', {item}).then((res) => {
+            this.$store.dispatch('member_save', {item}).then((res) => {
                 
                 if(res == 200){
                     this.notif_color ='blue';

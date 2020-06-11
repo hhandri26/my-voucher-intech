@@ -209,6 +209,10 @@
                       text : 'Transaksi Baru',
                       to    : '/',
                   },
+                  {
+                      text : 'Kasir',
+                      to    : '/',
+                  },
                   
               ]
           },
@@ -226,7 +230,7 @@
                   },
                   {
                       text : 'Gallery Produk',
-                      to    : '#',
+                      to    : '/product_gallery',
                   },
                   
               ]
@@ -237,7 +241,7 @@
               subLinks : [
                   {
                       text : 'List Dokter',
-                      to    : '#',
+                      to    : '/list_dokter',
                   },
                    {
                       text : 'Buat Resep',
@@ -267,11 +271,11 @@
               subLinks : [
                   {
                       text : 'User',
-                      to    : '#',
+                      to    : '/user',
                   },
                    {
                       text : 'Member',
-                      to    : '#',
+                      to    : '/member',
                   },
                    
                   

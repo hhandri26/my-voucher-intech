@@ -18,7 +18,7 @@
       <v-app id="inspire">
         <v-card>
           <v-card-title>
-            Produk
+            Produk gallery
             <v-spacer></v-spacer>
             <v-text-field
               v-model="search"
@@ -43,7 +43,7 @@
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="500px">
                     <template v-slot:activator="{ on }">
-                        <v-btn color="primary" dark class="mb-2" v-on="on"> Produk Baru</v-btn>
+                        <v-btn color="primary" dark class="mb-2" v-on="on"> Tambah Baru</v-btn>
                     </template>
                     <v-card>
                         <v-card-title>
@@ -58,7 +58,7 @@
                                 </v-col>
                                 <!-- <v-col cols="12">
                                     <v-img
-                                        :src="editedItem.product_img"
+                                        :src="editedItem.product_gallery_img"
                                         aspect-ratio="1"
                                         class="grey lighten-2"
                                         >
@@ -66,46 +66,26 @@
                                     </v-img>
                                 </v-col> -->
                                 <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.product_name" label="Nama Produk"></v-text-field>
+                                    <v-text-field v-model="editedItem.product_gallery_name" label="Nama Product Gallery"></v-text-field>
                                 </v-col>
-                                <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.product_code" label="Kode Produk"></v-text-field>
-                                </v-col>
+                               
                                 <v-col cols="12"  >
                                 
                                        <v-autocomplete
-                                        v-model="editedItem.product_category_id"
+                                        v-model="editedItem.product_id"
                                         :items="category"
                                        
                                         color="blue"
                                         hide-no-data
                                         hide-selected
-                                        item-text="product_category_name"
+                                        item-text="product_name"
                                         item-value="id"
-                                        label="Kategori Produk"
+                                        label="Produk"
                                     ></v-autocomplete>
                                     
                                
                                 </v-col>
-                                 <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.product_description" label="Deskripsi Produk"></v-text-field>
-                                </v-col>
                                 
-                                <v-col cols="12">
-                                   <vue-numeric  v-model="editedItem.product_price" placeholder="Harga Produk"  currency="Rp" separator="," :precision="2" ></vue-numeric>
-                                </v-col>
-                                <v-col cols="12">
-                                   <vue-numeric  v-model="editedItem.product_tax" placeholder="Pajak"  currency="Rp" separator="," :precision="2" ></vue-numeric>
-                                </v-col>
-                                <v-col cols="12">
-                                   <v-switch
-                                    v-model="status"
-                                    label="Aktif ?"
-                                  ></v-switch>
-                                </v-col>
-                                 <v-col cols="12">
-                                   <vue-numeric  v-model="editedItem.product_weight" placeholder="Berat"  currency="" separator="," :precision="2" ></vue-numeric>
-                                </v-col>
                            
                           
                             
@@ -157,8 +137,8 @@ import VueNumeric from 'vue-numeric'
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('product');
-    let category = await axios.get('product/catagories');
+    let data       = await axios.get('product/gallery');
+    let category = await axios.get('product');
       return {
         data:data.data.values,
         category:category.data.values
@@ -176,28 +156,16 @@ export default {
              status:'',
             editedItem: {
                 id:'',
-                product_name: '',
-                product_code: '',
-                product_category_id:'',
-                product_img:'',
-                product_description:'',
-                product_price:'',
-                product_tax:'',
-                product_status:'',
-                product_weight:''
+                product_id: '',
+                product_gallery_img: '',
+                product_gallery_name:''
                 
             },
             defaultItem: {
                 id:'',
-                product_name: '',
-                product_code: '',
-                product_category_id:'',
-                product_img:'',
-                product_description:'',
-                product_price:'',
-                product_tax:'',
-                product_status:'',
-                product_weight:''
+                product_id: '',
+                product_gallery_img: '',
+                product_gallery_name:''
             },
             multiLine: true,
             snackbar: false,
@@ -208,18 +176,13 @@ export default {
           search: '',
           headers: [
             {
-              text: 'Produk',
+              text: 'Produk Gallery',
               align: 'start',
               sortable: false,
-              value: 'product_name',
+              value: 'product_gallery_name',
             },
-            { text: 'Kode Produk', value: 'product_code' },
-            { text: 'Harga Produk', value: 'product_price' },
-            { text: 'Pajak', value: 'product_tax' },
-            { text: 'Status', value: 'product_status' },
-            { text: 'Berat', value: 'product_weight' },
-            
-             { text: 'Actions', value: 'actions', sortable: false },
+            { text: 'Nama Produk', value: 'product_name' },
+            { text: 'Actions', value: 'actions', sortable: false },
             
 
           ],
@@ -254,7 +217,7 @@ export default {
 
             axios.post('upload_file',formData,{headers: headers})
             .then(res => {
-                  this.editedItem.product_img   = res.data[0].mediaSource;                
+                  this.editedItem.product_gallery_img   = res.data[0].mediaSource;                
             }).catch(err => {
             console.log(err);
             })
@@ -269,7 +232,7 @@ export default {
         var item = {
           id:id
         };
-          this.$store.dispatch('product_delete', {item}).then((res) => {
+          this.$store.dispatch('product_gallery_delete', {item}).then((res) => {
                 
                 if(res == 200){
                    this.notif_color ='blue';
@@ -293,14 +256,8 @@ export default {
       },
       save () {
         var item = this.editedItem;
-        if(this.status == true){
-          this.editedItem.product_status = 'Active'
-        }else{
-          this.editedItem.product_status = 'Not Active'
-
-        }
         if (this.editedIndex > -1) {
-           this.$store.dispatch('product_update', {item}).then((res) => {
+           this.$store.dispatch('product_gallery_update', {item}).then((res) => {
                 
                 if(res == 200){
                     this.notif_color ='blue';
@@ -312,7 +269,7 @@ export default {
          
         } else {
             
-            this.$store.dispatch('product_save', {item}).then((res) => {
+            this.$store.dispatch('product_gallery_save', {item}).then((res) => {
                 
                 if(res == 200){
                     this.notif_color ='blue';
