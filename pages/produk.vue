@@ -56,7 +56,7 @@
                                 <v-col cols="12">
                                     <input ref="image" class="hide-input" type="file" accept="image/*"  @change="uploadfile">
                                 </v-col>
-                                <!-- <v-col cols="12">
+                                <v-col cols="12">
                                     <v-img
                                         :src="editedItem.product_img"
                                         aspect-ratio="1"
@@ -64,7 +64,7 @@
                                         >
                                        
                                     </v-img>
-                                </v-col> -->
+                                </v-col>
                                 <v-col cols="12" >
                                     <v-text-field v-model="editedItem.product_name" label="Nama Produk"></v-text-field>
                                 </v-col>

@@ -56,15 +56,15 @@
                                 <v-col cols="12">
                                     <input ref="image" class="hide-input" type="file" accept="image/*"  @change="uploadfile">
                                 </v-col>
-                                <!-- <v-col cols="12">
+                                <v-col cols="12">
                                     <v-img
-                                        :src="editedItem.product_gallery_img"
+                                        :src="editedItem.doctor_avatar"
                                         aspect-ratio="1"
                                         class="grey lighten-2"
                                         >
                                        
                                     </v-img>
-                                </v-col> -->
+                                </v-col>
                                 <v-col cols="12" >
                                     <v-text-field v-model="editedItem.doctor_code" label="Kode Dokter"></v-text-field>
                                 </v-col>

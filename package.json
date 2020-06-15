@@ -20,6 +20,7 @@
     "vue-numeric": "^2.3.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0"
+    "@nuxtjs/vuetify": "^1.0.0",
+    "cross-env": "^7.0.2"
   }
 }
