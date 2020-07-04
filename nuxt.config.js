@@ -15,7 +15,11 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    script: [{
+      src: "https://app.sandbox.midtrans.com/snap/snap.js",
+      'data-client-key':"SB-Mid-client--_qXTQVooQ0cOX79"
+    }]
   },
   /*
   ** Customize the progress-bar color

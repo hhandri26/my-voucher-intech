@@ -26,7 +26,7 @@
     >
       <v-list-item>
        <v-img
-          :src="require('@/assets/logo.png')"
+          :src="require('@/assets/1.png')"
           class="mr-5"
           contain
           height="48"
@@ -206,81 +206,14 @@
               text     : 'Transaksi',
               subLinks : [
                   {
-                      text : 'Transaksi Baru',
-                      to    : '/',
+                      text : 'Transaksi',
+                      to    : '/list_transaksi',
                   },
-                  {
-                      text : 'Kasir',
-                      to    : '/',
-                  },
+                 
                   
               ]
           },
-           {
-              icon     : 'mdi-dropbox',
-              text     : 'Produk',
-              subLinks : [
-                  {
-                      text : 'Kategori Produk',
-                      to    : '/kategori_produk',
-                  },
-                   {
-                      text : 'Produk',
-                      to    : '/produk',
-                  },
-                  {
-                      text : 'Gallery Produk',
-                      to    : '/product_gallery',
-                  },
-                  
-              ]
-          },
-          {
-              icon     : 'mdi-account-tie',
-              text     : 'Dokter',
-              subLinks : [
-                  {
-                      text : 'List Dokter',
-                      to    : '/list_dokter',
-                  },
-                   {
-                      text : 'Buat Resep',
-                      to    : '#',
-                  },
-                  
-              ]
-          },
-          {
-              icon     : 'mdi-clipboard-check-multiple',
-              text     : 'Laporan',
-              subLinks : [
-                  {
-                      text : 'Laporan Transaksi',
-                      to    : '#',
-                  },
-                   {
-                      text : 'Laporan Penjualan',
-                      to    : '#',
-                  },
-                  
-              ]
-          },
-           {
-              icon     : 'mdi-account',
-              text     : 'User',
-              subLinks : [
-                  {
-                      text : 'User',
-                      to    : '/user',
-                  },
-                   {
-                      text : 'Member',
-                      to    : '/member',
-                  },
-                   
-                  
-              ]
-          },
+          
          ]
          return nav
       }
