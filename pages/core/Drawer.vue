@@ -141,43 +141,7 @@
     },
 
     data: () => ({
-      items: [
-        {
-          icon: 'mdi-view-dashboard',
-          title: 'dashboard',
-          to: '/',
-        },
-        {
-          icon: 'mdi-account',
-          title: 'Produk',
-          to: '/pages/user',
-        },
-        {
-          title: 'rtables',
-          icon: 'mdi-clipboard-outline',
-          to: '/tables/regular-tables',
-        },
-        {
-          title: 'typography',
-          icon: 'mdi-format-font',
-          to: '/components/typography',
-        },
-        {
-          title: 'icons',
-          icon: 'mdi-chart-bubble',
-          to: '/components/icons',
-        },
-        {
-          title: 'google',
-          icon: 'mdi-map-marker',
-          to: '/maps/google-maps',
-        },
-        {
-          title: 'notifications',
-          icon: 'mdi-bell',
-          to: '/components/notifications',
-        },
-      ],
+     
     }),
 
     computed: {
@@ -199,14 +163,14 @@
           {
               to     : '/',
               icon   : 'mdi-view-dashboard',
-              text   : 'Dashboard',
+              text   : 'Voucher',
           },
           {
               icon     : 'mdi-cart',
               text     : 'Transaksi',
               subLinks : [
                   {
-                      text : 'Transaksi',
+                      text : 'Pembelian Voucher',
                       to    : '/list_transaksi',
                   },
                  

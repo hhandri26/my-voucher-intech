@@ -8,22 +8,22 @@
      
 
         <v-col
-          v-for="(item, i) in items"
+          v-for="(item, i) in data"
           :key="i"
           cols="12"
         >
           <v-card
-            :color="item.color"
+            color="#952175"
             light
           >
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
                 <v-card-title
                   class="headline"
-                  v-text="item.title"
+                  v-text="item.name_plan"
                 ></v-card-title>
 
-                <v-card-subtitle v-text="item.artist"></v-card-subtitle>
+                <v-card-subtitle v-text="item.burst_bw"></v-card-subtitle>
               </div>
 
               <v-avatar
@@ -46,6 +46,16 @@
 import axios from '~/plugins/axios'
   export default {
     name: 'DashboardDashboard',
+     middleware: 'auth',
+   async asyncData({store, error}) {   
+    let data       = await axios.get('/voucher/voucher_catagories');
+    //let parse = JSON.parse(data.data.values); 
+      return {
+        //data:parse.rajaongkir.results,
+        data:data.data.values
+      }
+       
+    },
 
     data () {
       return {
