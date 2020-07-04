@@ -1,6 +1,6 @@
 # My Voucher
 
-> Backend online shop kusuma
+> My Voucher Intech
 
 ## Build Setup
 

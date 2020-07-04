@@ -1,7 +1,7 @@
 {
-  "name": "Backend-kusuma",
+  "name": "my-voucher",
   "version": "1.0.0",
-  "description": "Backend online shop kusuma",
+  "description": "My Voucher Intech",
   "author": "hhandri26",
   "private": true,
   "scripts": {
