@@ -70,171 +70,7 @@ export const actions={
     async logout ({ commit }) {
         commit('SET_USER', null);
         localStorage.clear();
-        this.$router.push('logout')
-    },
-    async product_catagories_save ( {commit}, { item} ){
-      let status = '';
-      try {
-          await axios.post('product/catagories',item).then((response)=>{
-              status = response.data.status;
-               
-          });
-      }catch (e) {
-          status = 'field';
-      }
-      return status;        
-      
-    },
-    async product_catagories_update ( {commit}, { item} ){
-        let status = '';
-        try {
-            await axios.put('product/catagories',item).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-        
-    },
-    async product_catagories_delete ( {commit}, { item} ){
-        let status = '';
-
-        try {
-            
-            await axios.delete('product/catagories',{ data:  item }).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-        
-    },
-    async product_save ( {commit}, { item} ){
-        let status = '';
-        try {
-            await axios.post('product',item).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-        
-    },
-    async product_update ( {commit}, { item} ){
-        let status = '';
-        try {
-            await axios.put('product',item).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-    
-    },
-    async product_delete ( {commit}, { item} ){
-        let status = '';
-
-        try {
-            
-            await axios.delete('product',{ data:  item }).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-    
-    },
-    async product_gallery_save ( {commit}, { item} ){
-        let status = '';
-        try {
-            await axios.post('product/gallery',item).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-        
-    },
-    async product_gallery_update ( {commit}, { item} ){
-        let status = '';
-        try {
-            await axios.put('product/gallery',item).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-    
-    },
-    async product_gallery_delete ( {commit}, { item} ){
-        let status = '';
-
-        try {
-            
-            await axios.delete('product/gallery',{ data:  item }).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-    
-    },
-    async doctor_save ( {commit}, { item} ){
-        let status = '';
-        try {
-            await axios.post('doctor',item).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-        
-    },
-    async doctor_update ( {commit}, { item} ){
-        let status = '';
-        try {
-            await axios.put('doctor',item).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-    
-    },
-    async doctor_delete ( {commit}, { item} ){
-        let status = '';
-
-        try {
-            
-            await axios.delete('doctor',{ data:  item }).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-    
+        this.$router.push('/')
     },
     async user_save ( {commit}, { item} ){
         let status = '';
@@ -277,11 +113,10 @@ export const actions={
         return status;        
     
     },
-
-    async member_save ( {commit}, { item} ){
+    async transaction_save ( {commit}, { dat} ){
         let status = '';
         try {
-            await axios.post('member',item).then((response)=>{
+            await axios.post('payment',dat).then((response)=>{
                 status = response.data.status;
                 
             });
@@ -291,10 +126,10 @@ export const actions={
         return status;        
         
     },
-    async member_update ( {commit}, { item} ){
+    async upload_bukti_transfer ( {commit}, { item} ){
         let status = '';
         try {
-            await axios.put('member',item).then((response)=>{
+            await axios.post('payment/upload',item).then((response)=>{
                 status = response.data.status;
                 
             });
@@ -302,21 +137,7 @@ export const actions={
             status = 'field';
         }
         return status;        
-    
+        
     },
-    async member_delete ( {commit}, { item} ){
-        let status = '';
-
-        try {
-            
-            await axios.delete('member',{ data:  item }).then((response)=>{
-                status = response.data.status;
-                
-            });
-        }catch (e) {
-            status = 'field';
-        }
-        return status;        
-    
-    },
+  
 }

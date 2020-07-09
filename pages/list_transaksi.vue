@@ -30,7 +30,7 @@
           </v-card-title>
           <v-data-table
             :headers="headers"
-            :items="items"
+            :items="data"
             :search="search"
           >
            <template v-slot:top>
@@ -42,9 +42,7 @@
                     ></v-divider>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="500px">
-                    <!-- <template v-slot:activator="{ on }">
-                        <v-btn color="primary" dark class="mb-2" v-on="on"> Tambah Baru</v-btn>
-                    </template> -->
+                  
                     <v-card>
                         <v-card-title>
                         <span class="headline">{{ formTitle }}</span>
@@ -52,62 +50,19 @@
 
                         <v-card-text>
                         <v-container>
-                            <v-row>
-                               
-                               
-                                <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.first_name" label="Nama Awal"></v-text-field>
-                                </v-col>
-                                 <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.last_name" label="Nama Akhir"></v-text-field>
-                                </v-col>
-                                 <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
-                                </v-col>
-                                 <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.phone_number" label="Nomor Tlpn"></v-text-field>
-                                </v-col>
-                                 <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.password" label="Password"></v-text-field>
+                            <v-row>                              
+                                <v-col cols="12">
+                                    <input ref="image" class="hide-input" type="file" accept="image/*"  @change="uploadfile">
                                 </v-col>
                                 <v-col cols="12">
-                                      <v-autocomplete
-                                        v-model="editedItem.provinsi_id"
-                                        :items="province"
-                                        color="blue"
-                                        hide-no-data
-                                        hide-selected
-                                        item-text="province"
-                                        item-value="province_id"
-                                        label="Provinsi"
-                                        @change="get_city()"
-                                    ></v-autocomplete>
-
+                                    <v-img
+                                        :src="editedItem.bukti_transfer"
+                                        aspect-ratio="1"
+                                        class="grey lighten-2"
+                                        >
+                                       
+                                    </v-img>
                                 </v-col>
-                                <v-col cols="12">
-                                      <v-autocomplete
-                                        v-model="editedItem.kota_id"
-                                        :items="city"
-                                        color="blue"
-                                        hide-no-data
-                                        hide-selected
-                                        item-text="city_name"
-                                        item-value="city_id"
-                                        label="Kota"
-                                    ></v-autocomplete>
-
-                                </v-col>
-                                 <v-col cols="12" >
-                                    <v-text-field v-model="editedItem.address" label="Alamat"></v-text-field>
-                                </v-col>
-                                
-                               
-                               
-                                
-                           
-                          
-                            
-                            
                             </v-row>
                         </v-container>
                         </v-card-text>
@@ -129,12 +84,7 @@
                 >
                     mdi-pencil
                 </v-icon>
-                <v-icon
-                    small
-                    @click="deleteItem(item)"
-                >
-                    mdi-delete
-                </v-icon>
+               
                 </template>
                 <template v-slot:no-data>
                 <v-btn color="primary">Reset</v-btn>
@@ -155,12 +105,9 @@ import VueNumeric from 'vue-numeric'
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('member');
-    let province   = await axios.get('ongkir/province');
-    let parse      = JSON.parse(province.data.values);
+    let data       = await axios.get('payment/' + localStorage.userId);
       return {
         data:data.data.values,
-        province:parse.rajaongkir.results,
       }
        
     },
@@ -168,14 +115,6 @@ export default {
     
     data: function(){
         return {
-          items:[
-            {
-              notransaksi:114054,
-              item:'Voucher 1 jam',
-              username:'hhandri26',
-              password:'K56afL'
-            }
-          ],
           persen:false,
             dialog: false,
              editedIndex: -1,
@@ -184,26 +123,12 @@ export default {
              city:[],
             editedItem: {
                 id:'',
-                first_name: '',
-                last_name: '',
-                email:'',
-                phone_number: '',
-                password:'',
-                provinsi_id: '',
-                kota_id:'',
-                address:''
+               bukti_transfer:'',
                 
             },
             defaultItem: {
                 id:'',
-                first_name: '',
-                last_name: '',
-                email:'',
-                phone_number: '',
-                password:'',
-                provinsi_id: '',
-                kota_id:'',
-                address:''
+              bukti_transfer:'',
             },
             multiLine: true,
             snackbar: false,
@@ -217,11 +142,13 @@ export default {
               text: 'Nomor Transaksi',
               align: 'start',
               sortable: false,
-              value: 'notransaksi',
+              value: 'nomor_transaction',
             },
-            { text: 'Item', value: 'item' },
-            { text: 'Username', value: 'username' },
-             { text: 'Password', value: 'password' },
+            { text: 'Harga Voucher', value: 'price' },
+            { text: 'Jumlah', value: 'qty' },
+             { text: 'Sub Total', value: 'sub_total' },
+              { text: 'Status', value: 'status' },
+            { text: 'Actions', value: 'actions', sortable: false },
             
 
           ],
@@ -244,20 +171,7 @@ export default {
     created(){
     },
     methods: {
-        get_city(){
-            axios.post('ongkir/city',{provinsi_id:this.editedItem.provinsi_id})
-            .then(res => {
-       
-                    let parse      = JSON.parse(res.data.values);
-                             console.log(parse.rajaongkir.results)
-                    this.city = parse.rajaongkir.results;
-               
-                
-            }).catch(err => {
-            console.log(err);
-            })
-
-        },
+     
         uploadfile(){
             this.file = this.$refs.image.files[0];
             let formData = new FormData();
@@ -270,7 +184,7 @@ export default {
 
             axios.post('upload_file',formData,{headers: headers})
             .then(res => {
-                  this.editedItem.doctor_avatar = res.data[0].mediaSource;                
+                  this.editedItem.bukti_transfer = res.data[0].mediaSource;                
             }).catch(err => {
             console.log(err);
             })
@@ -281,25 +195,7 @@ export default {
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
-      delete_item(id){
-        var item = {
-          id:id
-        };
-          this.$store.dispatch('member_delete', {item}).then((res) => {
-                
-                if(res == 200){
-                   this.notif_color ='blue';
-                    this.notif_text ='Berhasil Menghapus Data !';
-                    this.snackbar = true;
-                }
-            })
-
-      },
-      deleteItem (item) {
-        const index = this.data.indexOf(item)
-        var id = item.id;
-        confirm('Are you sure you want to delete this item?') && this.data.splice(index, 1) && this.delete_item(id)
-      },
+   
       close () {
         this.dialog = false
         setTimeout(() => {
@@ -309,30 +205,18 @@ export default {
       },
       save () {
         var item = this.editedItem;
-        if (this.editedIndex > -1) {
-           this.$store.dispatch('member_update', {item}).then((res) => {
+        
+           this.$store.dispatch('upload_bukti_transfer', {item}).then((res) => {
                 
                 if(res == 200){
                     this.notif_color ='blue';
-                    this.notif_text ='Berhasil Update Data !';
+                    this.notif_text ='Berhasil Upload bukti Transfer !';
                     this.snackbar = true;
                      Object.assign(this.data[this.editedIndex], this.editedItem)
                 }
             })
          
-        } else {
-            
-            this.$store.dispatch('member_save', {item}).then((res) => {
-                
-                if(res == 200){
-                    this.notif_color ='blue';
-                    this.notif_text ='Berhasil Input Data !';
-                    this.snackbar = true;
-                    this.data.push(this.editedItem)
-                }
-            })
-            
-        }
+        
        
         
         this.close()

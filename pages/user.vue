@@ -151,8 +151,7 @@ export default {
         return {
             role:[
                 {role_code:'ADMIN', role_name:'Admin'},
-                {role_code:'DOCTOR', role_name:'Dokter'},
-                {role_code:'CASHIER', role_name:'Kasir'},
+                {role_code:'SUPPLIER', role_name:'Supplier'},
             ],
             status:false,
           persen:false,

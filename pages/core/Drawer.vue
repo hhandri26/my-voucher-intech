@@ -29,8 +29,8 @@
           :src="require('@/assets/1.png')"
           class="mr-5"
           contain
-          height="48"
-          width="48"
+          height="100"
+          width="100"
           @click="$vuetify.goTo(0)"
         />
 
@@ -105,6 +105,15 @@
                       
 
               </div>
+              <v-list-item link>
+              <v-list-item-action>
+                <v-icon>mdi-power-settings</v-icon>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title><a href="#" @click="logout"> Logout </a> </v-list-item-title>
+              </v-list-item-content>
+          </v-list-item>
       <!--  -->
 
       <!-- Style cascading bug  -->
@@ -158,27 +167,98 @@
         return this.items.map(this.mapItem)
       },
       links(){
+      if(this.$store.state.role =='ADMIN'){
        
          var nav= [
           {
               to     : '/',
               icon   : 'mdi-view-dashboard',
-              text   : 'Voucher',
+              text   : 'Dashboard',
           },
           {
               icon     : 'mdi-cart',
               text     : 'Transaksi',
               subLinks : [
                   {
-                      text : 'Pembelian Voucher',
+                      text : 'Top Up Voucher',
+                      to    : '/produk',
+                  },
+                  {
+                      text : 'Upload Bukti Transfer',
                       to    : '/list_transaksi',
                   },
+                  {
+                      text : 'List Voucher',
+                      to    : '/produk',
+                  },
+                 
+                  
+              ]
+          },
+          {
+              icon     : 'mdi-file-document-edit',
+              text     : 'Report',
+              subLinks : [
+                  {
+                      text : 'Validasi Bukti transfer',
+                      to    : '/approval',
+                  },
+                  {
+                      text : 'Penjualan Voucher',
+                      to    : '/report',
+                  },
+               
+                 
+                  
+              ]
+          },
+           {
+              icon     : 'mdi-baguette',
+              text     : 'Master',
+              subLinks : [
+                  {
+                      text : 'User',
+                      to    : '/user',
+                  },
+               
                  
                   
               ]
           },
           
          ]
+      }else{
+        var nav= [
+          {
+              to     : '/',
+              icon   : 'mdi-view-dashboard',
+              text   : 'Dashboard',
+          },
+          {
+              icon     : 'mdi-cart',
+              text     : 'Transaksi',
+              subLinks : [
+                  {
+                      text : 'Top Up Voucher',
+                      to    : '/produk',
+                  },
+                  {
+                      text : 'Upload Bukti Transfer',
+                      to    : '/list_transaksi',
+                  },
+                  {
+                      text : 'List Voucher',
+                      to    : '/produk',
+                  },
+                 
+                  
+              ]
+          },
+          
+          
+         ]
+
+      }
          return nav
       }
       
@@ -192,6 +272,21 @@
           title: 'dashboard',
         }
       },
+      async logout () {
+        try {
+          await this.$store.dispatch('logout')
+        
+        } catch (e) {
+          swal(
+              {
+                  title 			:'Error !',
+                  text 				:'Login Gagal !',
+                  type 				:'error',
+                  confirmButtonColor 	:'#4fa7f3'
+              }
+            )
+        }
+      }
     },
   }
 </script>
