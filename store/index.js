@@ -139,5 +139,18 @@ export const actions={
         return status;        
         
     },
+    async approved ( {commit}, { item} ){
+        let status = '';
+        try {
+            await axios.post('payment/approved',item).then((response)=>{
+                status = response.data.status;
+                
+            });
+        }catch (e) {
+            status = 'field';
+        }
+        return status;        
+        
+    },
   
 }

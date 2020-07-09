@@ -41,7 +41,7 @@ import VueNumeric from 'vue-numeric'
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('voucher_all/');
+    let data       = await axios.get('voucher_done/' + localStorage.userId);
       return {
         data:data.data.values,
       }

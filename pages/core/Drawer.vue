@@ -189,7 +189,7 @@
                   },
                   {
                       text : 'List Voucher',
-                      to    : '/produk',
+                      to    : '/voucher',
                   },
                  
                   
@@ -201,7 +201,7 @@
               subLinks : [
                   {
                       text : 'Validasi Bukti transfer',
-                      to    : '/approval',
+                      to    : '/list_transaksi_all',
                   },
                   {
                       text : 'Penjualan Voucher',
@@ -248,7 +248,7 @@
                   },
                   {
                       text : 'List Voucher',
-                      to    : '/produk',
+                      to    : '/voucher',
                   },
                  
                   
