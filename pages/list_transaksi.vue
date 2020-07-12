@@ -1,20 +1,35 @@
 <template>
 
     <div id="app">
-         <v-snackbar
-      v-model="snackbar"
-      :multi-line="multiLine"
-      
-    >
-      {{ notif_text }}
-      <v-btn
-        :color="notif_color"
-        notif_text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
+      <v-snackbar v-model="snackbar" :multi-line="multiLine">
+        {{ notif_text }}
+        <v-btn :color="notif_color" notif_text @click="snackbar = false">
+          Close
+        </v-btn>
+      </v-snackbar>
+      <v-dialog v-model="dialog2" width="700">
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>Pesanan Anda</v-card-title>
+          <v-card-text>
+            <v-data-table
+            :headers="headers2"
+            :items="detail"
+            :page.sync="page"
+            :items-per-page="itemsPerPage"
+            hide-default-footer
+            class="elevation-1"
+            @page-count="pageCount = $event"
+            >
+            </v-data-table>
+            <div class="text-center pt-2">
+              <v-pagination v-model="page" :length="pageCount"></v-pagination>
+            </div>
+          </v-card-text>
+          <v-divider></v-divider>
+
+        
+        </v-card>
+      </v-dialog>
       <v-app id="inspire">
         <v-card>
           <v-card-title>
@@ -84,6 +99,13 @@
                 >
                     mdi-pencil
                 </v-icon>
+                 <v-icon
+                    small
+                    class="mr-2"
+                    @click="show(item)"
+                >
+                    mdi-eye
+                </v-icon>
                
                 </template>
                 <template v-slot:no-data>
@@ -117,10 +139,15 @@ export default {
         return {
           persen:false,
             dialog: false,
+            dialog2:false,
              editedIndex: -1,
+              page: 1,
+        pageCount: 0,
+        itemsPerPage: 10,
              file: '',
              status:'',
              city:[],
+             detail:[],
             editedItem: {
                 id:'',
                bukti_transfer:'',
@@ -144,11 +171,23 @@ export default {
               sortable: false,
               value: 'nomor_transaction',
             },
-            { text: 'Harga Voucher', value: 'price' },
             { text: 'Jumlah', value: 'qty' },
              { text: 'Sub Total', value: 'sub_total' },
               { text: 'Status', value: 'status' },
             { text: 'Actions', value: 'actions', sortable: false },
+            
+
+          ],
+           headers2: [
+            {
+              text: 'Nomor Transaksi',
+              align: 'start',
+              sortable: false,
+              value: 'plan_name',
+            },
+            { text: 'Harga Voucher', value: 'price' },
+            { text: 'Jumlah', value: 'qty' },
+             { text: 'Sub Total', value: 'sub_total' },
             
 
           ],
@@ -171,6 +210,20 @@ export default {
     created(){
     },
     methods: {
+      show(item){
+
+       this.dialog2 = true;  
+       console.log(this.dialog2);
+          axios.get('payment/detail/'+item.nomor_transaction)
+            .then(res => {
+              
+                this.detail = res.data.values;   
+                       
+            }).catch(err => {
+            console.log(err);
+            })
+
+      },
      
         uploadfile(){
             this.file = this.$refs.image.files[0];

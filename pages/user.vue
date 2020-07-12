@@ -60,7 +60,17 @@
                                 <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
                             </v-col>
                             <v-col cols="12" >
-                                <v-text-field v-model="editedItem.real_password" label="Password"></v-text-field>
+                                <!-- <v-text-field v-model="editedItem.real_password" label="Password"></v-text-field> -->
+                                <v-text-field
+                                    v-model="editedItem.real_password"
+                                    :rules="[rules.password, rules.length(6)]"
+                                    filled
+                                    color="deep-purple"
+                                    counter="6"
+                                    label="Password"
+                                    style="min-height: 96px"
+                                    type="password"
+                                ></v-text-field>
                             </v-col>
                             
                             <v-col cols="12" >
@@ -75,6 +85,20 @@
                                         item-text="role_name"
                                         item-value="role_code"
                                         label="Role"
+                                    ></v-autocomplete>
+                            </v-col>
+                            <v-col cols="12" >
+                               
+                                <v-autocomplete
+                                        v-model="editedItem.zona"
+                                        :items="area"
+                                       
+                                        color="blue"
+                                        hide-no-data
+                                        hide-selected
+                                        item-text="owner_name"
+                                        item-value="owner_name"
+                                        label="zona user"
                                     ></v-autocomplete>
                             </v-col>
                             <v-col cols="12" >
@@ -138,10 +162,12 @@ export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
     let data       = await axios.get('users');
+     let area       = await axios.get('voucher/area');
     //let parse = JSON.parse(data.data.values); 
       return {
         //data:parse.rajaongkir.results,
-        data:data.data.values
+        data:data.data.values,
+        area:area.data.values
       }
        
     },
@@ -153,6 +179,13 @@ export default {
                 {role_code:'ADMIN', role_name:'Admin'},
                 {role_code:'SUPPLIER', role_name:'Supplier'},
             ],
+              rules: {
+                email: v => (v || '').match(/@/) || 'Please enter a valid email',
+                length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
+                password: v => (v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
+                  'Password must contain an upper case letter, a numeric character, and a special character',
+                required: v => !!v || 'This field is required',
+              },
             status:false,
           persen:false,
             dialog: false,
@@ -197,6 +230,9 @@ export default {
             
 
           ],
+          zona:[
+            {text:'Zona1',value:'zona1'}
+          ]
          
            
         }

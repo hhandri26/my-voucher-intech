@@ -1,7 +1,7 @@
 <template>
 
     <div id="app">
-         <v-snackbar
+    <v-snackbar
       v-model="snackbar"
       :multi-line="multiLine"
       
@@ -15,6 +15,29 @@
         Close
       </v-btn>
     </v-snackbar>
+    <v-dialog v-model="dialog2" width="700">
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>Pesanan Anda</v-card-title>
+          <v-card-text>
+            <v-data-table
+            :headers="headers2"
+            :items="detail"
+            :page.sync="page"
+            :items-per-page="itemsPerPage"
+            hide-default-footer
+            class="elevation-1"
+            @page-count="pageCount = $event"
+            >
+            </v-data-table>
+            <div class="text-center pt-2">
+              <v-pagination v-model="page" :length="pageCount"></v-pagination>
+            </div>
+          </v-card-text>
+          <v-divider></v-divider>
+
+        
+        </v-card>
+      </v-dialog>
       <v-app id="inspire">
         <v-card>
           <v-card-title>
@@ -96,6 +119,13 @@
                 >
                     mdi-pencil
                 </v-icon>
+                  <v-icon
+                    small
+                    class="mr-2"
+                    @click="show(item)"
+                >
+                    mdi-eye
+                </v-icon>
                
                 </template>
                 <template v-slot:no-data>
@@ -127,6 +157,7 @@ export default {
     
     data: function(){
         return {
+           dialog2:false,
           persen:false,
             dialog: false,
              editedIndex: -1,
@@ -158,6 +189,7 @@ export default {
             snackbar: false,
             notif_color:'',
             notif_text:'',
+            detail:[],
             
 
           search: '',
@@ -168,11 +200,24 @@ export default {
               sortable: false,
               value: 'nomor_transaction',
             },
-            { text: 'Harga Voucher', value: 'price' },
+             { text: 'Reseller', value: 'username' },
             { text: 'Jumlah', value: 'qty' },
              { text: 'Sub Total', value: 'sub_total' },
               { text: 'Status', value: 'status' },
             { text: 'Actions', value: 'actions', sortable: false },
+            
+
+          ],
+           headers2: [
+            {
+              text: 'Nomor Transaksi',
+              align: 'start',
+              sortable: false,
+              value: 'plan_name',
+            },
+            { text: 'Harga Voucher', value: 'price' },
+            { text: 'Jumlah', value: 'qty' },
+             { text: 'Sub Total', value: 'sub_total' },
             
 
           ],
@@ -195,6 +240,19 @@ export default {
     created(){
     },
     methods: {
+        show(item){
+
+       this.dialog2 = true;  
+          axios.get('payment/detail/'+item.nomor_transaction)
+            .then(res => {
+              
+                this.detail = res.data.values;   
+                       
+            }).catch(err => {
+            console.log(err);
+            })
+
+      },
      
         uploadfile(){
             this.file = this.$refs.image.files[0];
@@ -238,48 +296,59 @@ export default {
                     var nomor_transaction = this.editedItem.nomor_transaction;
                     var user_approved = localStorage.userId;
                     var price = this.editedItem.price;
-                    if(this.editedItem.status == 'APPROVED' || this.editedItem.status == 'PO' ){
-                        axios.post('voucher/list',{price:price,qty:qty}).then(res => {
-                           
-                            Object.entries(res.data.values).forEach(([key, val]) => {
-                             var dat = {
-                                id_voucher : val.id,
-                                plan_name: val.plan_name,
-                                price : val.price,
-                                id_user :id_user,
-                                nomor_transaction :nomor_transaction,
-                                secret : val.secret
-
-                            };
-                            //tag voucher    
-                            axios.post('voucher/tag',{id:val.id,id_user:id_user}).then(res => {
+                    // get detail
+                    axios.get('payment/detail/'+nomor_transaction)
+                    .then(response => {
+                      Object.entries(response.data.values).forEach(([key, val]) => {
+                            if(this.editedItem.status == 'APPROVED' || this.editedItem.status == 'PO' ){
+                            axios.post('voucher/list',{plan_name:val.plan_name,qty:qty}).then(res => {
                               
+                                Object.entries(res.data.values).forEach(([key, val]) => {
+                                var dat = {
+                                    id_voucher : val.id,
+                                    plan_name: val.plan_name,
+                                    price : val.price,
+                                    id_user :id_user,
+                                    nomor_transaction :nomor_transaction,
+                                    secret : val.secret
+
+                                };
+                                //tag voucher    
+                                axios.post('voucher/tag',{id:val.id,id_user:id_user}).then(res => {
+                                  
+                                }).catch(err => {
+                                    console.log(err);
+                                })
+                                // push detail transaksi
+                              
+                                axios.post('payment/detail',dat).then(res => {
+                                    if(res == 200){
+                                        this.notif_color ='blue';
+                                        this.notif_text ='Berhasil Approve Transaksi !';
+                                        this.snackbar = true;
+                                    }
+                                  
+                                }).catch(err => {
+                                    console.log(err);
+                                })
+
+
+
+                                })
                             }).catch(err => {
                                 console.log(err);
                             })
-                            // push detail transaksi
-                           
-                            axios.post('payment/detail',dat).then(res => {
-                                if(res == 200){
-                                    this.notif_color ='blue';
-                                    this.notif_text ='Berhasil Approve Transaksi !';
-                                    this.snackbar = true;
-                                }
+                        }
+                        this.notif_color ='blue';
+                        this.notif_text ='Berhasil Approve Transaksi !';
+                        this.snackbar = true;
+                      })
                               
-                            }).catch(err => {
-                                console.log(err);
-                            })
+                    }).catch(err => {
+                    console.log(err);
+                    })
 
-
-
-                            })
-                        }).catch(err => {
-                            console.log(err);
-                        })
-                    }
-                    this.notif_color ='blue';
-                    this.notif_text ='Berhasil Approve Transaksi !';
-                    this.snackbar = true;
+                 
                 }
             })
          

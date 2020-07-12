@@ -11,12 +11,14 @@
     width="260"
     v-bind="$attrs"
   >
+  
     <template v-slot:img="props">
       <v-img
         :gradient="`to bottom, ${barColor}`"
         v-bind="props"
       />
     </template>
+    
 
     <v-divider class="mb-1" />
 
@@ -130,6 +132,7 @@
         }"
       />
     </template>
+    
   </v-navigation-drawer>
 </template>
 
@@ -182,6 +185,10 @@
                   {
                       text : 'Top Up Voucher',
                       to    : '/produk',
+                  },
+                    {
+                      text : 'chekout',
+                      to    : '/chekout',
                   },
                   {
                       text : 'Upload Bukti Transfer',
@@ -241,6 +248,10 @@
                   {
                       text : 'Top Up Voucher',
                       to    : '/produk',
+                  },
+                  {
+                      text : 'chekout',
+                      to    : '/chekout',
                   },
                   {
                       text : 'Upload Bukti Transfer',

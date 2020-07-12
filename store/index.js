@@ -43,6 +43,7 @@ export const actions={
                     localStorage.setItem("userId",response.data.values[0].id);
                     localStorage.setItem("username",response.data.values[0].username);
                     localStorage.setItem("role",response.data.values[0].role);
+                    localStorage.setItem("zona",response.data.values[0].zona);
                     status = 200;
                     let dat ={
                         status : status
@@ -113,10 +114,10 @@ export const actions={
         return status;        
     
     },
-    async transaction_save ( {commit}, { dat} ){
+    async transaction_save ( {commit}, { header,detail} ){
         let status = '';
         try {
-            await axios.post('payment',dat).then((response)=>{
+            await axios.post('payment',{header,detail}).then((response)=>{
                 status = response.data.status;
                 
             });
