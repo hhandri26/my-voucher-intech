@@ -214,6 +214,10 @@
                       text : 'Penjualan Voucher',
                       to    : '/report',
                   },
+                   {
+                      text : 'Report Sisa Voucher',
+                      to    : '/stok_sisa_voucher',
+                  },
                
                  
                   

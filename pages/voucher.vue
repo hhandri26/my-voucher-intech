@@ -3,7 +3,25 @@
     <div id="app">
         
       <v-app id="inspire">
+      <div style="display:none">
+        <div class="container" id="print" ref="printMe" >
+           <v-flex xs12 md12>
+              <div style="width: 21cm; min-height: 29.7cm; padding: 2cm; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                <div v-for="(item, i) in data" :key="i" style="min-width: 220px;float: left;padding: 20px;">
+                  <img src="~assets/Voucher.png" width="220">
+                  <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 18px;">{{item.kode_voucher}}</div>
+
+                </div>
+              </div>
+              
+           </v-flex>
+            
+        </div>
+      </div>
         <v-card>
+          <div class="my-2">
+            <v-btn small color="primary" @click="print()">Cetak Voucher</v-btn>
+          </div>
           <v-card-title>
             List Voucher
             <v-spacer></v-spacer>
@@ -106,6 +124,20 @@ export default {
     created(){
     },
     methods: {
+      print(){
+          var mywindow = window.open('', 'PRINT', 'height=800,width=1200');
+
+        mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(document.getElementById("print").innerHTML);
+        mywindow.document.write('</body></html>');
+
+      
+
+        mywindow.print();
+       // mywindow.close();
+
+      },
      
         uploadfile(){
             this.file = this.$refs.image.files[0];
