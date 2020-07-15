@@ -194,10 +194,42 @@
                       text : 'Upload Bukti Transfer',
                       to    : '/list_transaksi',
                   },
+                 
+                 
+                  
+              ]
+          },
+           {
+              icon     : 'mdi-cards',
+              text     : 'Voucher',
+              subLinks : [
+                 
                   {
-                      text : 'List Voucher',
+                      text : 'Voucher',
                       to    : '/voucher',
                   },
+                   {
+                      text : 'Voucher Terpakai',
+                      to    : '/voucher_done',
+                  },
+                 
+                  
+              ]
+          },
+           {
+              icon     : 'mdi-file-document-edit',
+              text     : 'Approval',
+              subLinks : [
+                {
+                      text : 'Validasi Bukti transfer',
+                      to    : '/list_transaksi_all',
+                  },
+                  {
+                      text : 'Status Transaksi',
+                      to    : '/list_transaksi_all_change',
+                  },
+                 
+                 
                  
                   
               ]
@@ -206,10 +238,7 @@
               icon     : 'mdi-file-document-edit',
               text     : 'Report',
               subLinks : [
-                  {
-                      text : 'Validasi Bukti transfer',
-                      to    : '/list_transaksi_all',
-                  },
+                  
                   {
                       text : 'Penjualan Voucher',
                       to    : '/report',
@@ -261,9 +290,23 @@
                       text : 'Upload Bukti Transfer',
                       to    : '/list_transaksi',
                   },
+                
+                 
+                  
+              ]
+          },
+          {
+              icon     : 'mdi-cards',
+              text     : 'Voucher',
+              subLinks : [
+                 
                   {
-                      text : 'List Voucher',
+                      text : 'Voucher',
                       to    : '/voucher',
+                  },
+                   {
+                      text : 'Voucher Terpakai',
+                      to    : '/voucher_done',
                   },
                  
                   

@@ -1,20 +1,6 @@
 <template>
 
     <div id="app">
-      <v-snackbar
-      v-model="snackbar"
-      :multi-line="multiLine"
-      
-    >
-      {{ notif_text }}
-      <v-btn
-        :color="notif_color"
-        notif_text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
         
       <v-app id="inspire">
       <div style="display:none">
@@ -53,64 +39,7 @@
             :search="search"
           >
            
-               <template v-slot:top>
-                <v-toolbar flat color="white">
-                    <v-divider
-                    class="mx-4"
-                    inset
-                    vertical
-                    ></v-divider>
-                    <v-spacer></v-spacer>
-                    <v-dialog v-model="dialog" max-width="500px">
-                  
-                    <v-card>
-                        <v-card-title>
-                        <span class="headline">{{ formTitle }}</span>
-                        </v-card-title>
-
-                        <v-card-text>
-                        <v-container>
-                            <v-row>                              
-                               
-                                
-                                 <v-col cols="12" >
-                               
-                                <v-autocomplete
-                                        v-model="editedItem.status"
-                                        :items="status"
-                                       
-                                        color="blue"
-                                        hide-no-data
-                                        hide-selected
-                                        item-text="text"
-                                        item-value="value"
-                                        label="Status"
-                                    ></v-autocomplete>
-                            </v-col>
-                            </v-row>
-                        </v-container>
-                        </v-card-text>
-
-                        <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                    </v-dialog>
-                </v-toolbar>
-                </template>
-                <template v-slot:item.actions="{ item }">
-                <v-icon
-                    small
-                    class="mr-2"
-                    @click="editItem(item)"
-                >
-                    mdi-pencil
-                </v-icon>
-                  
                
-                </template>
                 <template v-slot:no-data>
                 <v-btn color="primary">Empty</v-btn>
             </template>
@@ -130,7 +59,7 @@ import VueNumeric from 'vue-numeric'
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('voucher_done/' + localStorage.userId);
+    let data       = await axios.get('voucher_done_status/' + localStorage.userId);
       return {
         data:data.data.values,
       }
@@ -140,9 +69,6 @@ export default {
     
     data: function(){
         return {
-            snackbar:'',
-          notif_text:'',
-          notif_color:'',
           persen:false,
             dialog: false,
              editedIndex: -1,
@@ -151,20 +77,17 @@ export default {
              city:[],
             editedItem: {
                 id:'',
-               status:'',
+               bukti_transfer:'',
                 
             },
             defaultItem: {
                 id:'',
-              status:'',
+              bukti_transfer:'',
             },
             multiLine: true,
             snackbar: false,
             notif_color:'',
             notif_text:'',
-            status:[
-                 {text:'Terpakai', value:'DONE'},
-             ],
             
 
           search: '',
@@ -179,7 +102,6 @@ export default {
             { text: 'Nama Voucher', value: 'plan_name' },
             { text: 'Harga', value: 'price' },
             { text: 'Kode Voucher', value: 'kode_voucher' },
-              { text: 'Actions', value: 'actions', sortable: false },
             
 
           ],
@@ -251,21 +173,13 @@ export default {
       save () {
         var item = this.editedItem;
         
-           this.$store.dispatch('update_status_voucher', {item}).then((res) => {
+           this.$store.dispatch('upload_bukti_transfer', {item}).then((res) => {
                 
                 if(res == 200){
                     this.notif_color ='blue';
-                    this.notif_text ='Status berhasil Di Ubah !';
+                    this.notif_text ='Berhasil Upload bukti Transfer !';
                     this.snackbar = true;
-                    //  Object.assign(this.data[this.editedIndex], this.editedItem)
-                     axios.get('voucher_done/' + localStorage.userId)
-                      .then(res => {
-                            this.data   = res.data.values;
-                        
-                          
-                      }).catch(err => {
-                      console.log(err);
-                      })
+                     Object.assign(this.data[this.editedIndex], this.editedItem)
                 }
             })
          

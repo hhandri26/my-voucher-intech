@@ -1,7 +1,7 @@
 <template>
 
     <div id="app">
-      <v-snackbar
+    <v-snackbar
       v-model="snackbar"
       :multi-line="multiLine"
       
@@ -15,29 +15,33 @@
         Close
       </v-btn>
     </v-snackbar>
-        
-      <v-app id="inspire">
-      <div style="display:none">
-        <div class="container" id="print" ref="printMe" >
-           <v-flex xs12 md12>
-              <div style="width: 21cm; min-height: 29.7cm; padding: 2cm; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                <div v-for="(item, i) in data" :key="i" style="min-width: 220px;float: left;padding: 20px;">
-                  <img src="~assets/Voucher.png" width="220">
-                  <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 18px;">{{item.kode_voucher}}</div>
-
-                </div>
-              </div>
-              
-           </v-flex>
-            
-        </div>
-      </div>
+    <v-dialog v-model="dialog2" width="700">
         <v-card>
-          <div class="my-2">
-            <v-btn small color="primary" @click="print()">Cetak Voucher</v-btn>
-          </div>
+          <v-card-title class="headline grey lighten-2" primary-title>Pesanan Anda</v-card-title>
+          <v-card-text>
+            <v-data-table
+            :headers="headers2"
+            :items="detail"
+            :page.sync="page"
+            :items-per-page="itemsPerPage"
+            hide-default-footer
+            class="elevation-1"
+            @page-count="pageCount = $event"
+            >
+            </v-data-table>
+            <div class="text-center pt-2">
+              <v-pagination v-model="page" :length="pageCount"></v-pagination>
+            </div>
+          </v-card-text>
+          <v-divider></v-divider>
+
+        
+        </v-card>
+      </v-dialog>
+      <v-app id="inspire">
+        <v-card>
           <v-card-title>
-            List Voucher
+            List Transaksi
             <v-spacer></v-spacer>
             <v-text-field
               v-model="search"
@@ -52,8 +56,7 @@
             :items="data"
             :search="search"
           >
-           
-               <template v-slot:top>
+           <template v-slot:top>
                 <v-toolbar flat color="white">
                     <v-divider
                     class="mx-4"
@@ -72,7 +75,6 @@
                         <v-container>
                             <v-row>                              
                                
-                                
                                  <v-col cols="12" >
                                
                                 <v-autocomplete
@@ -108,11 +110,17 @@
                 >
                     mdi-pencil
                 </v-icon>
-                  
+                  <v-icon
+                    small
+                    class="mr-2"
+                    @click="show(item)"
+                >
+                    mdi-eye
+                </v-icon>
                
                 </template>
                 <template v-slot:no-data>
-                <v-btn color="primary">Empty</v-btn>
+                <v-btn color="primary">Reset</v-btn>
             </template>
           </v-data-table>
         </v-card>
@@ -130,7 +138,7 @@ import VueNumeric from 'vue-numeric'
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('voucher_done/' + localStorage.userId);
+    let data       = await axios.get('payment_all');
       return {
         data:data.data.values,
       }
@@ -140,31 +148,39 @@ export default {
     
     data: function(){
         return {
-            snackbar:'',
-          notif_text:'',
-          notif_color:'',
+           dialog2:false,
           persen:false,
             dialog: false,
              editedIndex: -1,
              file: '',
-             status:'',
+             status:[
+                 {text:'Approved', value:'APPROVED'},
+                 {text:'Reject', value:'REJECT'},
+                 {text:'Pre Order', value:'PO'},
+             ],
              city:[],
             editedItem: {
                 id:'',
-               status:'',
+               bukti_transfer:'',
+               qty:'',
+               nomor_transaction:'',
+               id_user:'',
+               price:''
                 
             },
             defaultItem: {
                 id:'',
-              status:'',
+              bukti_transfer:'',
+              qty:'',
+              nomor_transaction:'',
+              id_user:'',
+              price:'',
             },
             multiLine: true,
             snackbar: false,
             notif_color:'',
             notif_text:'',
-            status:[
-                 {text:'Terpakai', value:'DONE'},
-             ],
+            detail:[],
             
 
           search: '',
@@ -175,11 +191,24 @@ export default {
               sortable: false,
               value: 'nomor_transaction',
             },
-            { text: 'Voucher Id', value: 'id_voucher' },
-            { text: 'Nama Voucher', value: 'plan_name' },
-            { text: 'Harga', value: 'price' },
-            { text: 'Kode Voucher', value: 'kode_voucher' },
-              { text: 'Actions', value: 'actions', sortable: false },
+             { text: 'Reseller', value: 'username' },
+            { text: 'Jumlah', value: 'qty' },
+             { text: 'Sub Total', value: 'sub_total' },
+              { text: 'Status', value: 'status' },
+            { text: 'Actions', value: 'actions', sortable: false },
+            
+
+          ],
+           headers2: [
+            {
+              text: 'Nomor Transaksi',
+              align: 'start',
+              sortable: false,
+              value: 'plan_name',
+            },
+            { text: 'Harga Voucher', value: 'price' },
+            { text: 'Jumlah', value: 'qty' },
+             { text: 'Sub Total', value: 'sub_total' },
             
 
           ],
@@ -202,18 +231,17 @@ export default {
     created(){
     },
     methods: {
-      print(){
-          var mywindow = window.open('', 'PRINT', 'height=800,width=1200');
+        show(item){
 
-        mywindow.document.write('<html><head><title>' + document.title  + '</title>');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write(document.getElementById("print").innerHTML);
-        mywindow.document.write('</body></html>');
-
-      
-
-        mywindow.print();
-       // mywindow.close();
+       this.dialog2 = true;  
+          axios.get('payment/detail/'+item.nomor_transaction)
+            .then(res => {
+              
+                this.detail = res.data.values;   
+                       
+            }).catch(err => {
+            console.log(err);
+            })
 
       },
      
@@ -251,21 +279,67 @@ export default {
       save () {
         var item = this.editedItem;
         
-           this.$store.dispatch('update_status_voucher', {item}).then((res) => {
+           this.$store.dispatch('approved', {item}).then((res) => {
                 
                 if(res == 200){
-                    this.notif_color ='blue';
-                    this.notif_text ='Status berhasil Di Ubah !';
-                    this.snackbar = true;
-                    //  Object.assign(this.data[this.editedIndex], this.editedItem)
-                     axios.get('voucher_done/' + localStorage.userId)
-                      .then(res => {
-                            this.data   = res.data.values;
-                        
-                          
-                      }).catch(err => {
-                      console.log(err);
+                    var qty = this.editedItem.qty;
+                    var id_user = this.editedItem.id_user;
+                    var nomor_transaction = this.editedItem.nomor_transaction;
+                    var user_approved = localStorage.userId;
+                    var price = this.editedItem.price;
+                    // get detail
+                    axios.get('payment/detail/'+nomor_transaction)
+                    .then(response => {
+                      Object.entries(response.data.values).forEach(([key, val]) => {
+                            if(this.editedItem.status == 'APPROVED' || this.editedItem.status == 'PO' ){
+                            axios.post('voucher/list',{plan_name:val.plan_name,qty:qty}).then(res => {
+                              
+                                Object.entries(res.data.values).forEach(([key, val]) => {
+                                var dat = {
+                                    id_voucher : val.id,
+                                    plan_name: val.plan_name,
+                                    price : val.price,
+                                    id_user :id_user,
+                                    nomor_transaction :nomor_transaction,
+                                    secret : val.secret
+
+                                };
+                                //tag voucher    
+                                axios.post('voucher/tag',{id:val.id,id_user:id_user}).then(res => {
+                                  
+                                }).catch(err => {
+                                    console.log(err);
+                                })
+                                // push detail transaksi
+                              
+                                axios.post('payment/detail',dat).then(res => {
+                                    if(res == 200){
+                                        this.notif_color ='blue';
+                                        this.notif_text ='Berhasil Approve Transaksi !';
+                                        this.snackbar = true;
+                                    }
+                                  
+                                }).catch(err => {
+                                    console.log(err);
+                                })
+
+
+
+                                })
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                        }
+                        this.notif_color ='blue';
+                        this.notif_text ='Berhasil Approve Transaksi !';
+                        this.snackbar = true;
                       })
+                              
+                    }).catch(err => {
+                    console.log(err);
+                    })
+
+                 
                 }
             })
          

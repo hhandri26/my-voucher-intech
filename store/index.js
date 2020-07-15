@@ -44,6 +44,7 @@ export const actions={
                     localStorage.setItem("username",response.data.values[0].username);
                     localStorage.setItem("role",response.data.values[0].role);
                     localStorage.setItem("zona",response.data.values[0].zona);
+                    localStorage.setItem("email",response.data.values[0].email);
                     status = 200;
                     let dat ={
                         status : status
@@ -90,6 +91,20 @@ export const actions={
         let status = '';
         try {
             await axios.put('users',item).then((response)=>{
+                status = response.data.status;
+                
+            });
+        }catch (e) {
+            status = 'field';
+        }
+        return status;        
+    
+    },
+
+    async update_status_voucher ( {commit}, { item} ){
+        let status = '';
+        try {
+            await axios.put('payment/status_vucher',item).then((response)=>{
                 status = response.data.status;
                 
             });

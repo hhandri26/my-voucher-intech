@@ -39,20 +39,14 @@
         </v-card-title>
 
         <v-card-text>
-           <v-text-field v-model="data_cart.qty" type="number" label="Qty" append-outer-icon="add" @click:append-outer="increment" prepend-icon="remove" @click:prepend="decrement"></v-text-field>
+           <v-text-field v-model="data_cart.qty" type="text" label="Qty" append-outer-icon="add" @click:append-outer="increment" prepend-icon="remove" @click:prepend="decrement"></v-text-field>
                       
         </v-card-text>
        
         <v-card-text>
-            <vue-numeric currency="Rp" separator="," v-model="data_cart.subtotal" style="font-size: 30px;" disabled></vue-numeric>
+            <vue-numeric currency="Rp" separator="," v-model="total_price" style="font-size: 30px;" disabled></vue-numeric>
         </v-card-text>
-         <v-card-text>
-          Silahkan Transfer Melalui <br>
-          BANK BRI KCP PANGERAN JAYAKARTA JAYAKARTA
-          <a href="#"> 117901000289301 </a>
-          A/N PT INTECH ESA MANDIRI
-
-        </v-card-text>
+       
         
 
         <v-divider></v-divider>
@@ -177,7 +171,14 @@ import VueNumeric from 'vue-numeric'
             }
             return count;
 
-        }
+        },
+      total_price(){
+        //var total = this.details.reduce((acc, elm) => acc + (elm.produk_qty * 1),0);
+        //return total;
+         this.data_cart.subtotal = this.data_cart.price * this.data_cart.qty;
+         return this.data_cart.subtotal;
+
+      },
     },
     mounted() {
         var cart = JSON.parse(localStorage.getItem("cart"));
@@ -235,6 +236,7 @@ import VueNumeric from 'vue-numeric'
                 this.data_cart.validity_unit='';
                 this.data_cart.qty=0;
                 this.data_cart.subtotal=0;
+                this.dialog = false;
                 
               
 

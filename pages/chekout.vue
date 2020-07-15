@@ -234,7 +234,8 @@ import VueNumeric from 'vue-numeric'
           id_user   : localStorage.userId,
           zona      : localStorage.zona,
           qty       : this.total_qty,
-          sub_total : this.count_sub_total
+          sub_total : this.count_sub_total,
+          email     : localStorage.email
         };    
         var detail = this.cart;
        
