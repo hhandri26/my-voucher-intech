@@ -267,7 +267,7 @@
           },
           
          ]
-      }else{
+      }else if(this.$store.state.role =='RESELLER'){
         var nav= [
           {
               to     : '/',
@@ -315,6 +315,137 @@
           
           
          ]
+
+      }else if(this.$store.state.role =='FINANCE'){
+         var nav= [
+          {
+              to     : '/',
+              icon   : 'mdi-view-dashboard',
+              text   : 'Dashboard',
+          },
+          
+           {
+              icon     : 'mdi-file-document-edit',
+              text     : 'Approval',
+              subLinks : [
+                {
+                      text : 'Validasi Bukti transfer',
+                      to    : '/list_transaksi_all',
+                  },
+                  {
+                      text : 'Status Transaksi',
+                      to    : '/list_transaksi_all_change',
+                  },
+                 
+                 
+                 
+                  
+              ]
+          },
+          {
+              icon     : 'mdi-file-document-edit',
+              text     : 'Report',
+              subLinks : [
+                  
+                  {
+                      text : 'Penjualan Voucher',
+                      to    : '/report',
+                  },
+                   {
+                      text : 'Report Sisa Voucher',
+                      to    : '/stok_sisa_voucher',
+                  },
+               
+                 
+                  
+              ]
+          },
+           
+          
+         ]
+
+      }else if(this.$store.state.role =='PIC'){
+        var nav= [
+          {
+              to     : '/',
+              icon   : 'mdi-view-dashboard',
+              text   : 'Dashboard',
+          },
+          
+           {
+              icon     : 'mdi-file-document-edit',
+              text     : 'Approval',
+              subLinks : [
+                {
+                      text : 'Validasi Bukti transfer',
+                      to    : '/list_transaksi_all',
+                  },
+                  
+                 
+                 
+                 
+                  
+              ]
+          },
+           {
+              icon     : 'mdi-file-document-edit',
+              text     : 'Report',
+              subLinks : [
+                  
+                   {
+                      text : 'Report Sisa Voucher',
+                      to    : '/stok_sisa_voucher',
+                  },
+               
+                 
+                  
+              ]
+          },
+           
+          
+         ]
+
+
+      }else if(this.$store.state.role =='NOC'){
+         var nav= [
+          {
+              to     : '/',
+              icon   : 'mdi-view-dashboard',
+              text   : 'Dashboard',
+          },
+          
+         
+           {
+              icon     : 'mdi-file-document-edit',
+              text     : 'Report',
+              subLinks : [
+                  
+                   {
+                      text : 'Report Sisa Voucher',
+                      to    : '/stok_sisa_voucher',
+                  },
+               
+                 
+                  
+              ]
+          },
+          {
+              icon     : 'mdi-baguette',
+              text     : 'Master',
+              subLinks : [
+                  {
+                      text : 'User',
+                      to    : '/user',
+                  },
+               
+                 
+                  
+              ]
+          },
+           
+          
+         ]
+
 
       }
          return nav

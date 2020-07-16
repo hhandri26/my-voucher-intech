@@ -177,7 +177,10 @@ export default {
         return {
             role:[
                 {role_code:'ADMIN', role_name:'Admin'},
-                {role_code:'SUPPLIER', role_name:'Supplier'},
+                {role_code:'RESELLER', role_name:'Reseller'},
+                {role_code:'FINANCE', role_name:'Finance'},
+                 {role_code:'NOC', role_name:'Noc'},
+                 {role_code:'PIC', role_name:'Pic'},
             ],
               rules: {
                 email: v => (v || '').match(/@/) || 'Please enter a valid email',

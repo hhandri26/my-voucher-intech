@@ -282,63 +282,10 @@ export default {
            this.$store.dispatch('approved', {item}).then((res) => {
                 
                 if(res == 200){
-                    var qty = this.editedItem.qty;
-                    var id_user = this.editedItem.id_user;
-                    var nomor_transaction = this.editedItem.nomor_transaction;
-                    var user_approved = localStorage.userId;
-                    var price = this.editedItem.price;
-                    // get detail
-                    axios.get('payment/detail/'+nomor_transaction)
-                    .then(response => {
-                      Object.entries(response.data.values).forEach(([key, val]) => {
-                            if(this.editedItem.status == 'APPROVED' || this.editedItem.status == 'PO' ){
-                            axios.post('voucher/list',{plan_name:val.plan_name,qty:qty}).then(res => {
-                              
-                                Object.entries(res.data.values).forEach(([key, val]) => {
-                                var dat = {
-                                    id_voucher : val.id,
-                                    plan_name: val.plan_name,
-                                    price : val.price,
-                                    id_user :id_user,
-                                    nomor_transaction :nomor_transaction,
-                                    secret : val.secret
-
-                                };
-                                //tag voucher    
-                                axios.post('voucher/tag',{id:val.id,id_user:id_user}).then(res => {
-                                  
-                                }).catch(err => {
-                                    console.log(err);
-                                })
-                                // push detail transaksi
-                              
-                                axios.post('payment/detail',dat).then(res => {
-                                    if(res == 200){
-                                        this.notif_color ='blue';
-                                        this.notif_text ='Berhasil Approve Transaksi !';
-                                        this.snackbar = true;
-                                    }
-                                  
-                                }).catch(err => {
-                                    console.log(err);
-                                })
-
-
-
-                                })
-                            }).catch(err => {
-                                console.log(err);
-                            })
-                        }
-                        this.notif_color ='blue';
-                        this.notif_text ='Berhasil Approve Transaksi !';
-                        this.snackbar = true;
-                      })
-                              
-                    }).catch(err => {
-                    console.log(err);
-                    })
-
+                   this.notif_color ='blue';
+                  this.notif_text ='Berhasil Approve Transaksi !';
+                  this.snackbar = true;
+                   
                  
                 }
             })
