@@ -261,6 +261,7 @@ import VueNumeric from 'vue-numeric'
                 this.notif_text ='Silahkan Upload Bukti Transfer !';
                 this.snackbar = true;
                 this.dialog = false;
+                this.cart = [];
                 localStorage.removeItem("cart");
                  
             }
