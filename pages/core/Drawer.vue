@@ -187,7 +187,7 @@
                       to    : '/produk',
                   },
                     {
-                      text : 'chekout',
+                      text : 'Keranjang Belanja',
                       to    : '/chekout',
                   },
                   {
@@ -238,6 +238,10 @@
               icon     : 'mdi-file-document-edit',
               text     : 'Report',
               subLinks : [
+                {
+                      text : 'Report Transaksi',
+                      to    : '/report_transaction',
+                  },
                   
                   {
                       text : 'Penjualan Voucher',
@@ -246,6 +250,10 @@
                    {
                       text : 'Report Sisa Voucher',
                       to    : '/stok_sisa_voucher',
+                  },
+                   {
+                      text : 'Report Area Vocuher',
+                      to    : '/report_zona',
                   },
                
                  
@@ -283,7 +291,7 @@
                       to    : '/produk',
                   },
                   {
-                      text : 'chekout',
+                      text : 'Keranjang Belanja',
                       to    : '/chekout',
                   },
                   {

@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import webpack from 'webpack'
 
 export default {
   mode: 'spa',
@@ -16,6 +17,20 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
+    script:[
+      {
+        type: 'text/javascript',
+        src: 'excel/jszip.js'
+      },
+      {
+        type: 'text/javascript',
+        src: 'excel/FileSaver.js'
+      },
+      {
+        type: 'text/javascript',
+        src: 'excel/myexcel.js'
+      },
+    ]
     
   },
   /*
@@ -31,14 +46,18 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/filter.js'
+    '~/plugins/filter.js',
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/moment',
   ],
+  moment: {
+    defaultTimezone: 'Indonesia/Jakarta'
+  },
   /*
   ** Nuxt.js modules
   */
@@ -88,6 +107,14 @@ export default {
     /*
     ** You can extend webpack config here
     */
+   plugins: [
+    new webpack.ProvidePlugin({
+      // global modules
+      '$': 'jquery',
+      '_': 'lodash'
+      
+    })
+  ],
     extend (config, ctx) {
     }
   }

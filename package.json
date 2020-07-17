@@ -17,9 +17,11 @@
     "nuxt": "^2.0.0",
     "nuxt-material-design-icons": "^1.0.4",
     "vue-chartist": "^2.3.0",
-    "vue-numeric": "^2.3.0"
+    "vue-numeric": "^2.3.0",
+    "vue2-datepicker": "^3.6.1"
   },
   "devDependencies": {
+    "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/vuetify": "^1.0.0",
     "cross-env": "^7.0.2"
   }

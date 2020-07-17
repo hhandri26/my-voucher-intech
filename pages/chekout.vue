@@ -86,7 +86,17 @@
       hide-default-footer
       class="elevation-1"
       @page-count="pageCount = $event"
-    ></v-data-table>
+    >
+    <template v-slot:item.actions="{ item }">
+              
+                <v-icon
+                    small
+                    @click="deleteItem(item)"
+                >
+                    mdi-delete
+                </v-icon>
+                </template>
+    </v-data-table>
     <div class="text-center pt-2">
       <v-pagination v-model="page" :length="pageCount"></v-pagination>
      
@@ -168,6 +178,7 @@ import VueNumeric from 'vue-numeric'
           { text: 'Masa Berlaku', value: 'validity' },
           { text: 'Satuan', value: 'validity_unit' },
           { text: 'Jumlah', value: 'qty' },
+          { text: 'Actions', value: 'actions', sortable: false },
         ],
        
       }
@@ -225,6 +236,10 @@ import VueNumeric from 'vue-numeric'
      dialog_payment:function(){
          this.dialog = true;
      },
+      deleteItem (item) {
+        const index = this.cart.indexOf(item)
+        confirm('Are you sure you want to delete this item?') && this.cart.splice(index, 1) ;
+      },
      
   
      

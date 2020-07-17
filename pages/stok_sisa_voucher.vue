@@ -1,6 +1,12 @@
 <template>
 
     <div id="app">
+        <v-row>
+                    <v-col cols="3">
+                         
+                          <v-btn depressed small color="primary" @click="export_excel()">Export</v-btn>
+                    </v-col>
+                  </v-row>
       <v-snackbar v-model="snackbar" :multi-line="multiLine">
         {{ notif_text }}
         <v-btn :color="notif_color" notif_text @click="snackbar = false">
@@ -273,6 +279,37 @@ export default {
         
         this.close()
       },
+      export_excel(){
+          var excel = $JExcel.new();
+          excel.set({ sheet: 0, value: "Report" });
+          var evenRow = excel.addStyle({ border: "none,none,none,thin #333333" });
+          var oddRow = excel.addStyle({ fill: "#ECECEC", border: "none,none,none,thin #333333" });
+
+          var headers = ["Nama Voucher", "Harga", "Sisa", "Zona"];
+
+          for (var i = 0; i < headers.length; i++) {                       
+            // Loop headers
+            excel.set(0, i, 0, headers[i]);
+            // Set CELL header text & header format
+            excel.set(0, i, undefined, "auto");
+          }
+          var i = 1;
+
+        
+          // Set COLUMN width to auto 
+          _.each(this.data, function (value) {
+            
+              excel.set(0, 0, i, value.plan_name);
+              excel.set(0, 1, i, value.price);
+              excel.set(0, 2, i, value.sisa);
+              excel.set(0, 3, i, value.owner_name);
+              
+              i = i + 1;
+          });
+         
+
+          excel.generate("report_sisa_voucher_" + Date.now() + ".xlsx");
+        }
     },
     components: {
       VueNumeric,

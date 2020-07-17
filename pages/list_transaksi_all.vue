@@ -147,7 +147,7 @@ import VueNumeric from 'vue-numeric'
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('payment_all');
+    let data       = await axios.get('payment_finance');
       return {
         data:data.data.values,
       }
@@ -339,9 +339,17 @@ export default {
                                 console.log(err);
                             })
                         }
+
                         this.notif_color ='blue';
                         this.notif_text ='Berhasil Approve Transaksi !';
                         this.snackbar = true;
+                          axios.get('payment_finance')
+                          .then(res => {
+                                this.data   = res.data.values;               
+                              
+                          }).catch(err => {
+                          console.log(err);
+                          })
                       })
                               
                     }).catch(err => {
