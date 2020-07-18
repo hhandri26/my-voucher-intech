@@ -238,6 +238,8 @@ export default {
 
     },
     created(){
+     
+     
     },
     methods: {
         show(item){
@@ -296,14 +298,16 @@ export default {
                     var nomor_transaction = this.editedItem.nomor_transaction;
                     var user_approved = localStorage.userId;
                     var price = this.editedItem.price;
+                  
                     // get detail
                     axios.get('payment/detail/'+nomor_transaction)
                     .then(response => {
+                      
                       Object.entries(response.data.values).forEach(([key, val]) => {
                             if(this.editedItem.status == 'APPROVED' || this.editedItem.status == 'PO' ){
-                            axios.post('voucher/list',{plan_name:val.plan_name,qty:qty}).then(res => {
+                            axios.post('voucher/list',{plan_name:val.plan_name,qty:val.qty}).then(res2 => {
                               
-                                Object.entries(res.data.values).forEach(([key, val]) => {
+                                Object.entries(res2.data.values).forEach(([key, val]) => {
                                 var dat = {
                                     id_voucher : val.id,
                                     plan_name: val.plan_name,
@@ -314,15 +318,15 @@ export default {
 
                                 };
                                 //tag voucher    
-                                axios.post('voucher/tag',{id:val.id,id_user:id_user}).then(res => {
+                                axios.post('voucher/tag',{id:val.id,id_user:id_user}).then(res3 => {
                                   
                                 }).catch(err => {
                                     console.log(err);
                                 })
                                 // push detail transaksi
                               
-                                axios.post('payment/detail',dat).then(res => {
-                                    if(res == 200){
+                                axios.post('payment/detail',dat).then(res4 => {
+                                    if(res4 == 200){
                                         this.notif_color ='blue';
                                         this.notif_text ='Berhasil Approve Transaksi !';
                                         this.snackbar = true;
@@ -344,8 +348,8 @@ export default {
                         this.notif_text ='Berhasil Approve Transaksi !';
                         this.snackbar = true;
                           axios.get('payment_finance')
-                          .then(res => {
-                                this.data   = res.data.values;               
+                          .then(res5 => {
+                                this.data   = res5.data.values;               
                               
                           }).catch(err => {
                           console.log(err);
