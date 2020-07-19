@@ -21,9 +21,9 @@
         <div class="container" id="print" ref="printMe" >
            <v-flex xs12 md12>
               <div style="width: 21cm; min-height: 29.7cm; padding: 2cm; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                <div v-for="(item, i) in data" :key="i" style="min-width: 220px;float: left;padding: 20px;">
-                  <img src="~assets/Voucher.png" width="220">
-                  <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 18px;">{{item.kode_voucher}}</div>
+                <div v-for="(item, i) in data" :key="i" style="min-width: 110px;float: left;padding: 20px;">
+                  <img src="~assets/Voucher.png" width="110">
+                  <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 15px;">{{item.kode_voucher}}</div>
 
                 </div>
               </div>
