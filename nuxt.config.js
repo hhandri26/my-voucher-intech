@@ -74,10 +74,6 @@ export default {
   axios: {
   },
 
-  server: {
-    port: 8888, // default: 3000
-    host: '0.0.0.0' // default: localhost
-  },
 
   /*
   ** vuetify module configuration
