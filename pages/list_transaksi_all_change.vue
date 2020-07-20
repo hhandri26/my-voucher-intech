@@ -154,9 +154,6 @@ export default {
              editedIndex: -1,
              file: '',
              status:[
-                 {text:'Approved', value:'APPROVED'},
-                 {text:'Reject', value:'REJECT'},
-                 {text:'Pre Order', value:'PO'},
                   {text:'Paid', value:'PAID'},
              ],
              city:[],
