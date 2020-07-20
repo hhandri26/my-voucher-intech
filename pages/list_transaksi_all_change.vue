@@ -157,6 +157,7 @@ export default {
                  {text:'Approved', value:'APPROVED'},
                  {text:'Reject', value:'REJECT'},
                  {text:'Pre Order', value:'PO'},
+                  {text:'Paid', value:'PAID'},
              ],
              city:[],
             editedItem: {

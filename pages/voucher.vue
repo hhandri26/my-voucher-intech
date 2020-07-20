@@ -1,6 +1,40 @@
 <template>
 
     <div id="app">
+                <v-card>
+            <v-row>
+              <v-col cols="12" >
+                 
+                  <v-row>
+                    <v-col cols="3">
+                        Nomor Transaksi
+                    </v-col>
+                    <v-col cols="4">
+                        <v-autocomplete
+                            v-model="no_trans_id"
+                            :items="no_trans"
+                            color="blue"
+                            hide-no-data
+                            hide-selected
+                            item-text="nomor_transaction"
+                            item-value="nomor_transaction"
+                            label="Pilih Nomor Transaksi"
+                        ></v-autocomplete>
+                    </v-col>
+                  </v-row>
+                  
+                  <v-row>
+                    <v-col cols="3">
+                         <v-btn depressed small color="primary" @click="do_search()">Cari</v-btn>
+                          <v-btn small color="primary" @click="print()">Cetak Voucher</v-btn>
+                    </v-col>
+                  
+                  </v-row>
+                 
+              </v-col>
+            </v-row>
+           
+          </v-card>
       <v-snackbar
       v-model="snackbar"
       :multi-line="multiLine"
@@ -33,9 +67,7 @@
         </div>
       </div>
         <v-card>
-          <div class="my-2">
-            <v-btn small color="primary" @click="print()">Cetak Voucher</v-btn>
-          </div>
+        
           <v-card-title>
             List Voucher
             <v-spacer></v-spacer>
@@ -131,8 +163,10 @@ export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
     let data       = await axios.get('voucher_done/' + localStorage.userId);
+    let no_trans  = await axios.get('voucher_no_transaction/' + localStorage.userId);
       return {
         data:data.data.values,
+        no_trans:no_trans.data.values
       }
        
     },
@@ -140,6 +174,7 @@ export default {
     
     data: function(){
         return {
+          no_trans_id:'',
             snackbar:'',
           notif_text:'',
           notif_color:'',
@@ -202,6 +237,19 @@ export default {
     created(){
     },
     methods: {
+      do_search(){
+        var id = this.no_trans_id;
+        
+          axios.get('search_voucher/' + this.no_trans_id)
+            .then(res => {
+                  this.data   = res.data.values;               
+                
+            }).catch(err => {
+            console.log(err);
+            })
+
+
+      },
       print(){
           var mywindow = window.open('', 'PRINT', 'height=800,width=1200');
 
