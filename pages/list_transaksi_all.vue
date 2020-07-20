@@ -293,18 +293,20 @@ export default {
            this.$store.dispatch('approved', {item}).then((res) => {
                 
                 if(res == 200){
-                    var qty = this.editedItem.qty;
-                    var id_user = this.editedItem.id_user;
-                    var nomor_transaction = this.editedItem.nomor_transaction;
-                    var user_approved = localStorage.userId;
-                    var price = this.editedItem.price;
+                    var qty = item.qty;
+                    var id_user = item.id_user;
+                    var nomor_transaction = item.nomor_transaction;
+                    var user_approved = item.userId;
+                    var price = item.price;
+
+                    console.log(item.nomor_transaction);
                   
                     // get detail
                     axios.get('payment/detail/'+nomor_transaction)
                     .then(response => {
                       
                       Object.entries(response.data.values).forEach(([key, val]) => {
-                            if(this.editedItem.status == 'APPROVED' || this.editedItem.status == 'PO' ){
+                            if(item.status == 'APPROVED' || item.status == 'PO' ){
                             axios.post('voucher/list',{plan_name:val.plan_name,qty:val.qty}).then(res2 => {
                               
                                 Object.entries(res2.data.values).forEach(([key, val]) => {
