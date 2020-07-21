@@ -174,7 +174,9 @@ export default {
                qty:'',
                nomor_transaction:'',
                id_user:'',
-               price:''
+               price:'',
+               email:'',
+               user_approved : localStorage.userId
                 
             },
             defaultItem: {
@@ -184,6 +186,8 @@ export default {
               nomor_transaction:'',
               id_user:'',
               price:'',
+              email:'',
+                user_approved : localStorage.userId
             },
             multiLine: true,
             snackbar: false,
