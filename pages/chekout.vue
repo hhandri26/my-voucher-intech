@@ -87,7 +87,60 @@
       class="elevation-1"
       @page-count="pageCount = $event"
     >
+     <template v-slot:top>
+                <v-toolbar flat color="white">
+                    <v-divider
+                    class="mx-4"
+                    inset
+                    vertical
+                    ></v-divider>
+                    <v-spacer></v-spacer>
+                    <v-dialog v-model="dialog2" max-width="500px">
+                  
+                    <v-card>
+                        <v-card-title>
+                        <span class="headline">{{ formTitle }}</span>
+                        </v-card-title>
+
+                        <v-card-text>
+                        <v-container>
+                            <v-row>                              
+                                 <v-col cols="4" >
+                                     <v-card-text>
+                                        Qty
+                                    </v-card-text>
+                               
+                               
+                            </v-col>
+                                
+                                 <v-col cols="8" >
+                                     <v-card-text>
+                                        <vue-numeric v-model="editedItem.qty" style="font-size: 20px;"></vue-numeric>
+                                    </v-card-text>
+                               
+                               
+                            </v-col>
+                            </v-row>
+                        </v-container>
+                        </v-card-text>
+
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="close2">Cancel</v-btn>
+                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                    </v-dialog>
+                </v-toolbar>
+                </template>
     <template v-slot:item.actions="{ item }">
+       <v-icon
+                    small
+                    class="mr-2"
+                    @click="editItem(item)"
+                >
+                    mdi-pencil
+                </v-icon>
               
                 <v-icon
                     small
@@ -95,6 +148,7 @@
                 >
                     mdi-delete
                 </v-icon>
+                 
                 </template>
     </v-data-table>
     <div class="text-center pt-2">
@@ -141,6 +195,7 @@ import VueNumeric from 'vue-numeric'
 
     data () {
       return {
+        dialog2:false,
           multiLine:'',
           snackbar:'',
           notif_text:'',
@@ -180,6 +235,14 @@ import VueNumeric from 'vue-numeric'
           { text: 'Jumlah', value: 'qty' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
+        editedIndex: -1,
+        editedItem: {
+               qty:'',
+                
+            },
+            defaultItem: {
+              qty:'',
+            },
        
       }
     },
@@ -194,7 +257,7 @@ import VueNumeric from 'vue-numeric'
 
         },
         count_sub_total:function(){
-            var total   = (this.cart.reduce((acc, item) => acc + (item.subtotal * 1),0) ) ;
+            var total   = (this.cart.reduce((acc, item) => acc + (item.price * item.qty),0) ) ;
             this.sub_total = total;
             return total;
 
@@ -231,14 +294,96 @@ import VueNumeric from 'vue-numeric'
         
        
     },
+     watch:{
+        dialog (val) {
+        val || this.close()
+      },
+
+    },
 
     methods: {
+      save(){
+        if (this.editedIndex > -1) {
+          Object.assign(this.cart[this.editedIndex], this.editedItem)
+        } else {
+          this.cart.push(this.editedItem)
+        }
+        this.close2()
+
+      },
+       close () {
+        this.dialog = false
+        setTimeout(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        }, 300)
+      },
+        close2 () {
+        this.dialog2 = false
+        setTimeout(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        }, 300)
+      },
+       editItem (item) {
+        this.editedIndex = this.cart.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialog2 = true
+      },
      dialog_payment:function(){
          this.dialog = true;
      },
       deleteItem (item) {
         const index = this.cart.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.cart.splice(index, 1) ;
+        confirm('Are you sure you want to delete this item?') && this.cart.splice(index, 1) && this.deleteCart() ;
+      },
+      deleteCart(){
+       
+        
+        //localStorage.setItem("cart",JSON.stringify([this.cart]));
+        var del = localStorage.removeItem("cart");
+        // var existing = JSON.parse(localStorage.getItem("cart"));
+        //         if(existing!== null){
+        //             var b=[{}];
+        //             b =JSON.parse(localStorage.getItem("cart")) || [];
+        //             b.push(this.cart);
+        //             localStorage.setItem("cart",JSON.stringify(b));
+
+        //         }else{
+        //             localStorage.setItem("cart",JSON.stringify([this.cart]));
+
+        //         }
+        //var cart = JSON.parse(localStorage.getItem("cart"));
+        var cr  = this.cart;
+        var dat =[];
+        if(this.cart !== null){
+           Object.entries(cr).forEach(([key, val]) => {
+            var data= {
+            price         :val.price,
+            name_plan     :val.name_plan,
+            bw_name       :val.bw_name,
+            validity      :val.validity,
+            validity_unit :val.validity_unit,
+            qty           :val.qty,
+            subtotal      :val.subtotal
+
+        }
+        dat.push(data);
+        localStorage.setItem("cart",JSON.stringify(dat));
+          
+           
+        
+            
+        });
+
+        }
+          
+           
+        
+            
+     
+        
+
       },
      
   
