@@ -54,11 +54,11 @@
       <div style="display:none">
         <div class="container" id="print" ref="printMe" >
            <v-flex xs12 md12>
-              <div style="width: 21cm; min-height: 29.7cm; padding: 20px; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);text-align: center;padding-left: 30px;">
-                <div v-for="(item, i) in data" :key="i" style="min-width: 110px;float: left;">
-                  <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 8px;">{{item.plan_name}}</div>
-                  <img src="~assets/Voucher.png" width="110">
-                  <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 15px;">{{item.kode_voucher}}</div>
+              <div style="width: 21cm; padding: 20px; margin: 1cm auto; border-radius: 5px; background: white;text-align: center;padding-left: 70px;">
+                <div v-for="(item, i) in data" :key="i" style="min-width: 110px;float: left; border: solid 1px;">
+                  <div style="width: 100%;background-color: #fff;text-align: center;height: 20px;font-size: 12px;">{{ item.plan_name.slice(14)}}</div>
+                  <img src="~assets/Voucher.png" width="150">
+                  <div style="width: 100%;background-color: #fff;text-align: center;height: 20px;font-size: 15px;">{{item.kode_voucher}}</div>
 
                 </div>
               </div>
@@ -199,7 +199,7 @@ export default {
             notif_color:'',
             notif_text:'',
             status:[
-                 {text:'Terpakai', value:'DONE'},
+                 {text:'Terjual', value:'DONE'},
              ],
             
 

@@ -207,6 +207,8 @@ export default {
              { text: 'Reseller', value: 'username' },
             { text: 'Jumlah', value: 'qty' },
              { text: 'Sub Total', value: 'sub_total' },
+             { text: 'Tanggal', value: 'date' },
+             { text: 'Waktu', value: 'time' },
               { text: 'Status', value: 'status' },
             { text: 'Actions', value: 'actions', sortable: false },
             

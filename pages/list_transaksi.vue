@@ -174,6 +174,8 @@ export default {
             { text: 'Jumlah', value: 'qty' },
              { text: 'Sub Total', value: 'sub_total' },
               { text: 'Status', value: 'status' },
+               { text: 'Tanggal', value: 'date' },
+             { text: 'Waktu', value: 'time' },
             { text: 'Actions', value: 'actions', sortable: false },
             
 
