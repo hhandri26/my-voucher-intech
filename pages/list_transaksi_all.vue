@@ -300,7 +300,7 @@ export default {
                     var qty = item.qty;
                     var id_user = item.id_user;
                     var nomor_transaction = item.nomor_transaction;
-                    var user_approved = item.userId;
+                    var user_approved = localStorage.userId;
                     var price = item.price;
 
                     console.log(item.nomor_transaction);

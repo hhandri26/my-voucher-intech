@@ -56,6 +56,7 @@
            <v-flex xs12 md12>
               <div style="width: 21cm; min-height: 29.7cm; padding: 20px; margin: 1cm auto; border: 1px #D3D3D3 solid; border-radius: 5px; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);text-align: center;padding-left: 30px;">
                 <div v-for="(item, i) in data" :key="i" style="min-width: 110px;float: left;">
+                  <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 8px;">{{item.plan_name}}</div>
                   <img src="~assets/Voucher.png" width="110">
                   <div style="width: 100%;background-color: #fff;border: solid 1px;text-align: center;height: 20px;font-size: 15px;">{{item.kode_voucher}}</div>
 
@@ -213,6 +214,8 @@ export default {
             { text: 'Voucher Id', value: 'id_voucher' },
             { text: 'Nama Voucher', value: 'plan_name' },
             { text: 'Harga', value: 'price' },
+            { text: 'Tanggal', value: 'date' },
+            { text: 'Waktu', value: 'time' },
             { text: 'Kode Voucher', value: 'kode_voucher' },
               { text: 'Actions', value: 'actions', sortable: false },
             
