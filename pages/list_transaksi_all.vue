@@ -176,7 +176,8 @@ export default {
                id_user:'',
                price:'',
                email:'',
-               user_approved : localStorage.userId
+               user_approved : localStorage.userId,
+               username:''
                 
             },
             defaultItem: {
@@ -187,7 +188,8 @@ export default {
               id_user:'',
               price:'',
               email:'',
-                user_approved : localStorage.userId
+                user_approved : localStorage.userId,
+                username:''
             },
             multiLine: true,
             snackbar: false,
