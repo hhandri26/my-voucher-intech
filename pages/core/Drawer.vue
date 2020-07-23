@@ -205,11 +205,11 @@
               subLinks : [
                  
                   {
-                      text : 'Voucher',
+                      text : 'List Voucher',
                       to    : '/voucher',
                   },
                    {
-                      text : 'Voucher Terpakai',
+                      text : 'Status Voucher',
                       to    : '/voucher_done',
                   },
                  
@@ -309,11 +309,11 @@
               subLinks : [
                  
                   {
-                      text : 'Voucher',
+                      text : 'List Voucher',
                       to    : '/voucher',
                   },
                    {
-                      text : 'Voucher Terpakai',
+                      text : 'Status Voucher',
                       to    : '/voucher_done',
                   },
                  

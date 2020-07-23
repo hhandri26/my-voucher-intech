@@ -44,6 +44,19 @@
                 <v-btn color="primary">Empty</v-btn>
             </template>
           </v-data-table>
+          
+          <v-card-subtitle >
+              Total Voucher Terjual {{total_terjual}}
+
+          </v-card-subtitle>
+          <v-card-subtitle >
+              Total Sisa Voucher {{total_sisa}}
+
+          </v-card-subtitle>
+           <v-card-subtitle >
+              Total Voucher {{total_qty}}
+
+          </v-card-subtitle>
         </v-card>
       </v-app>
     </div>
@@ -69,6 +82,7 @@ export default {
     
     data: function(){
         return {
+          total_terjual:0,
           persen:false,
             dialog: false,
              editedIndex: -1,
@@ -88,6 +102,8 @@ export default {
             snackbar: false,
             notif_color:'',
             notif_text:'',
+            total_sisa:0,
+            total_qty:'',
             
 
           search: '',
@@ -100,7 +116,8 @@ export default {
             },
             { text: 'Voucher Id', value: 'id_voucher' },
             { text: 'Nama Voucher', value: 'plan_name' },
-            { text: 'Harga', value: 'price' },
+            { text: 'Harga', value: 'harga' },
+            { text: 'Status', value: 'status' },
             { text: 'Kode Voucher', value: 'kode_voucher' },
             
 
@@ -113,8 +130,17 @@ export default {
         formTitle () {
         return this.editedIndex === -1 ? 'New' : 'Edit'
       },
+      total_qty:function(){
+        var total   = (this.data.reduce((acc, item) => acc + (item.qty * 1),0) ) ;
+        this.sub_total = total;
+        return total;
+
+    },
        
     },
+     mounted() {
+       
+     },
     watch:{
         dialog (val) {
         val || this.close()
@@ -122,6 +148,29 @@ export default {
 
     },
     created(){
+       axios.get('count_voucher_terjual/' + localStorage.userId)
+        .then(res => {
+              this.total_terjual = res.data.values[0].total;               
+            
+        }).catch(err => {
+        console.log(err);
+        });
+
+          axios.get('count_voucher_sisa/' + localStorage.userId)
+        .then(res => {
+              this.total_sisa = res.data.values[0].total;               
+            
+        }).catch(err => {
+        console.log(err);
+        });
+
+          axios.get('count_voucher/' + localStorage.userId)
+        .then(res => {
+              this.total_qty = res.data.values[0].total;               
+            
+        }).catch(err => {
+        console.log(err);
+        })
     },
     methods: {
       print(){
@@ -135,7 +184,7 @@ export default {
       
 
         mywindow.print();
-       // mywindow.close();
+       mywindow.close();
 
       },
      

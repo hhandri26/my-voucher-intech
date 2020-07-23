@@ -63,6 +63,12 @@
                         <span class="headline">{{ formTitle }}</span>
                         </v-card-title>
 
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                        </v-card-actions>
+
                         <v-card-text>
                         <v-container>
                             <v-row>                              
@@ -74,6 +80,7 @@
                                         :src="editedItem.bukti_transfer"
                                         aspect-ratio="1"
                                         class="grey lighten-2"
+                                        width="300"
                                         >
                                        
                                     </v-img>
@@ -82,11 +89,7 @@
                         </v-container>
                         </v-card-text>
 
-                        <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                        </v-card-actions>
+                        
                     </v-card>
                     </v-dialog>
                 </v-toolbar>
@@ -271,7 +274,13 @@ export default {
                     this.notif_color ='blue';
                     this.notif_text ='Berhasil Upload bukti Transfer !';
                     this.snackbar = true;
-                     Object.assign(this.data[this.editedIndex], this.editedItem)
+                    axios.get('payment/' + localStorage.userId)
+                          .then(res5 => {
+                                this.data   = res5.data.values;               
+                              
+                          }).catch(err => {
+                          console.log(err);
+                          })
                 }
             })
          
