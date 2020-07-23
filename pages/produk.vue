@@ -85,7 +85,7 @@
                   v-text="item.name_plan"
                 ></v-card-title>
 
-                <v-card-subtitle>Rp. {{item.price | thousand}}</v-card-subtitle>
+                <v-card-subtitle style="font-size: 20px;background-color: #ffc302;width: 150px;border: 1px solid;border-radius: 10px;padding: 10px;">Rp. {{item.price | thousand}}</v-card-subtitle>
               </div>
 
               <v-avatar

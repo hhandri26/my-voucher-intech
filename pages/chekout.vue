@@ -227,7 +227,7 @@ import VueNumeric from 'vue-numeric'
           {
             text: 'Harga',
            
-            value: 'price',
+            value: 'harga',
           },
          
           { text: 'Masa Berlaku', value: 'validity' },
@@ -280,7 +280,8 @@ import VueNumeric from 'vue-numeric'
             validity      :val.validity,
             validity_unit :val.validity_unit,
             qty           :val.qty,
-            subtotal      :val.subtotal
+            subtotal      :val.subtotal,
+            harga         :this.$options.filters.thousand(val.price)
 
         }
         this.cart.push(data);

@@ -97,7 +97,7 @@
                     class="mr-2"
                     @click="editItem(item)"
                 >
-                    mdi-pencil
+                   mdi-upload
                 </v-icon>
                  <v-icon
                     small
@@ -151,11 +151,15 @@ export default {
             editedItem: {
                 id:'',
                bukti_transfer:'',
+               nomor_transaction:'',
+                harga:''
                 
             },
             defaultItem: {
                 id:'',
               bukti_transfer:'',
+              nomor_transaction:'',
+              harga:''
             },
             multiLine: true,
             snackbar: false,
@@ -172,7 +176,7 @@ export default {
               value: 'nomor_transaction',
             },
             { text: 'Jumlah', value: 'qty' },
-             { text: 'Sub Total', value: 'sub_total' },
+             { text: 'Sub Total', value: 'harga' },
               { text: 'Status', value: 'status' },
                { text: 'Tanggal', value: 'date' },
              { text: 'Waktu', value: 'time' },
