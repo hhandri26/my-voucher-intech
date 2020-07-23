@@ -175,6 +175,7 @@ export default {
                nomor_transaction:'',
                id_user:'',
                price:'',
+               sub_total:'',
                email:'',
                user_approved : localStorage.userId,
                username:''
@@ -187,6 +188,7 @@ export default {
               nomor_transaction:'',
               id_user:'',
               price:'',
+              sub_total:'',
               email:'',
                 user_approved : localStorage.userId,
                 username:''
@@ -307,7 +309,7 @@ export default {
                     var user_approved = localStorage.userId;
                     var price = item.price;
 
-                    console.log(item.nomor_transaction);
+                   // console.log(item.nomor_transaction);
                   
                     // get detail
                     axios.get('payment/detail/'+nomor_transaction)
