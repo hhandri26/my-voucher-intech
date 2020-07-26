@@ -56,7 +56,7 @@
            <v-flex xs12 md12>
               <div style="width: 21cm; padding: 20px; margin: 1cm auto; border-radius: 5px; background: white;text-align: center;padding-left: 70px;">
                 <div v-for="(item, i) in data" :key="i" style="min-width: 110px;float: left; border: solid 1px;">
-                  <div style="width: 150px;background-color: rgb(255, 255, 255);text-align: center;height: 30px;font-size: 12px;position: absolute;display: table;">{{ item.plan_name.slice(14)}}</div>
+                  <div style="width: 150px;background-color: rgb(255, 255, 255);text-align: center;height: 30px;font-size: 12px;position: absolute;display: table;">{{ item.plan_name}}</div>
                   <img src="~assets/Voucher.png" width="145">
                   <div style="width: 100%;background-color: #fff;text-align: center;height: 20px;font-size: 15px;">{{item.kode_voucher}}</div>
 
