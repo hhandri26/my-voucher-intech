@@ -1,15 +1,39 @@
 <template>
 
     <div id="app">
-                <v-card>
-            <v-row>
-              <v-col cols="12" >
-                 
+                <v-card style="padding:20px">
+           
+              <v-container>
                   <v-row>
-                    <v-col cols="3">
+                    <v-flex xs6 md6>
+                        Tanggal Transaksi
+                    </v-flex>
+                    <v-flex xs6 md6>
+                      <date-picker v-model="date" style="width:150px" range format="YYYY-MM-DD" placeholder="Tanggal"></date-picker>
+                    </v-flex>
+                  </v-row>
+                   <v-row>
+                    <v-flex xs6 md6>
+                        Paket Voucher
+                    </v-flex>
+                    <v-flex xs6 md6>
+                        <v-autocomplete
+                            v-model="plan_name"
+                            :items="plan_name_data"
+                            color="blue"
+                            hide-no-data
+                            hide-selected
+                            item-text="plan_name"
+                            item-value="plan_name"
+                            label="Pilih Paket Voucher"
+                        ></v-autocomplete>
+                    </v-flex>
+                  </v-row>
+                  <v-row>
+                    <v-flex xs6 md6>
                         Nomor Transaksi
-                    </v-col>
-                    <v-col cols="4">
+                    </v-flex>
+                    <v-flex xs6 md6>
                         <v-autocomplete
                             v-model="no_trans_id"
                             :items="no_trans"
@@ -20,19 +44,27 @@
                             item-value="nomor_transaction"
                             label="Pilih Nomor Transaksi"
                         ></v-autocomplete>
-                    </v-col>
+                    </v-flex>
                   </v-row>
                   
                   <v-row>
-                    <v-col cols="3">
-                         <v-btn depressed small color="primary" @click="do_search()">Cari</v-btn>
-                          <v-btn small color="primary" @click="print()">Cetak Voucher</v-btn>
-                    </v-col>
+                    <v-flex xs12 md12>
+                         <v-btn depressed color="primary" style="width:100%" @click="do_search()">Cari</v-btn>
+                    </v-flex>
+                     <v-flex xs12 md12>
+                       <div style="height:10px"></div>
+                       </v-flex>
+                    <v-flex xs12 md12>
+                          <v-btn color="primary" style="width:100%" @click="print()">Cetak Voucher</v-btn>
+                    </v-flex>
+                      <v-flex xs12 md12>
+                          <v-btn color="yellow" style="width:100%" @click="reset()">Reset</v-btn>
+                    </v-flex>
                   
                   </v-row>
                  
-              </v-col>
-            </v-row>
+              </v-container>
+           
            
           </v-card>
       <v-snackbar
@@ -80,6 +112,13 @@
               hide-details
             ></v-text-field>
           </v-card-title>
+            <div class="text-center" v-if="loading">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </div>
           <v-data-table
             :headers="headers"
             :items="data"
@@ -159,15 +198,19 @@
 import {mapState} from 'vuex'
 import axios from '~/plugins/axios'
 import VueNumeric from 'vue-numeric'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
     let data       = await axios.get('voucher_done/' + localStorage.userId);
     let no_trans  = await axios.get('voucher_no_transaction/' + localStorage.userId);
+    let plan_name_data  = await axios.get('voucher_plan_name/' + localStorage.userId);
       return {
         data:data.data.values,
-        no_trans:no_trans.data.values
+        no_trans:no_trans.data.values,
+        plan_name_data : plan_name_data.data.values
       }
        
     },
@@ -175,6 +218,9 @@ export default {
     
     data: function(){
         return {
+           loading:false,
+           date:'',
+          plan_name:'',
           no_trans_id:'',
             snackbar:'',
           notif_text:'',
@@ -240,12 +286,39 @@ export default {
     created(){
     },
     methods: {
-      do_search(){
-        var id = this.no_trans_id;
-        
-          axios.get('search_voucher/' + this.no_trans_id)
+      reset(){
+         this.loading = true;
+          axios.get('voucher_done/'+ localStorage.userId)
             .then(res => {
-                  this.data   = res.data.values;               
+                  this.data   = res.data.values; 
+                   this.loading = false; 
+                   this.date ="";
+                   this.plan_name="";
+                   this.plan_name="";
+                no_trans_id
+            }).catch(err => {
+            console.log(err);
+            })
+
+      },
+      do_search(){
+        this.loading = true;
+        var id = this.no_trans_id;
+        var date1 = this.$moment(this.date[0]).format("YYYY-MM-DD");
+        var date2 = this.$moment(this.date[1]).format("YYYY-MM-DD");
+        var dat = {
+          date1 : this.$moment(this.date[0]).format("YYYY-MM-DD"),
+          date2 : this.$moment(this.date[1]).format("YYYY-MM-DD"),
+          nomor_transaction : this.no_trans_id,
+          plan_name : this.plan_name
+
+
+        };
+        
+          axios.post('search_voucher',dat)
+            .then(res => {
+                  this.data   = res.data.values; 
+                   this.loading = false;              
                 
             }).catch(err => {
             console.log(err);
@@ -328,6 +401,7 @@ export default {
     },
     components: {
       VueNumeric,
+      DatePicker
       
     }
 }

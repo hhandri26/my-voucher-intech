@@ -105,7 +105,7 @@
                         <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                        <v-btn v-if="editedItem.get_voucher !==0" color="blue darken-1" text @click="save">Save</v-btn>
                         </v-card-actions>
                     </v-card>
                     </v-dialog>
@@ -178,7 +178,9 @@ export default {
                sub_total:'',
                email:'',
                user_approved : localStorage.userId,
-               username:''
+               username:'',
+               status:'',
+                 get_voucher:''
                 
             },
             defaultItem: {
@@ -191,7 +193,9 @@ export default {
               sub_total:'',
               email:'',
                 user_approved : localStorage.userId,
-                username:''
+                username:'',
+                status:'',
+                get_voucher:''
             },
             multiLine: true,
             snackbar: false,
@@ -298,6 +302,7 @@ export default {
         }, 300)
       },
       save () {
+        this.editedItem.user_approved = localStorage.userId;
         var item = this.editedItem;
         
            this.$store.dispatch('approved', {item}).then((res) => {
@@ -316,7 +321,7 @@ export default {
                     .then(response => {
                       
                       Object.entries(response.data.values).forEach(([key, val]) => {
-                            if(item.status == 'APPROVED' || item.status == 'PO' ){
+                            if(item.status == 'APPROVED' || item.status == 'PO'  ){
                             axios.post('voucher/list',{plan_name:val.plan_name,qty:val.qty}).then(res2 => {
                               
                                 Object.entries(res2.data.values).forEach(([key, val]) => {
