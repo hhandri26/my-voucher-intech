@@ -172,6 +172,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
+          v-if="cart.length > 0"
             color="primary"
             text
             @click="dialog_payment()"
