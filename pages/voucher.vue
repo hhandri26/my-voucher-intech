@@ -58,7 +58,7 @@
                           <v-btn color="primary" style="width:100%" @click="print()">Cetak Voucher</v-btn>
                     </v-flex>
                       <v-flex xs12 md12>
-                          <v-btn color="yellow" style="width:100%" @click="reset()">Reset</v-btn>
+                          <v-btn color="yellow" style="width:100%" @click="reset()">Semua Voucher</v-btn>
                     </v-flex>
                   
                   </v-row>

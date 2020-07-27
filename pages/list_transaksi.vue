@@ -156,7 +156,8 @@ export default {
                bukti_transfer:'',
                nomor_transaction:'',
                 harga:'',
-                status:''
+                status:'',
+                username:''
                 
             },
             defaultItem: {
@@ -164,7 +165,8 @@ export default {
               bukti_transfer:'',
               nomor_transaction:'',
               harga:'',
-              status:''
+              status:'',
+              username:''
             },
             multiLine: true,
             snackbar: false,
@@ -268,6 +270,7 @@ export default {
         }, 300)
       },
       save () {
+        this.editedItem.username = localStorage.username;
         var item = this.editedItem;
         
            this.$store.dispatch('upload_bukti_transfer', {item}).then((res) => {
