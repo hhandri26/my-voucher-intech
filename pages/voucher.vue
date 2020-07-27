@@ -219,7 +219,7 @@ export default {
     data: function(){
         return {
            loading:false,
-           date:'',
+           date:null,
           plan_name:'',
           no_trans_id:'',
             snackbar:'',
@@ -303,12 +303,17 @@ export default {
       },
       do_search(){
         this.loading = true;
-        var id = this.no_trans_id;
-        var date1 = this.$moment(this.date[0]).format("YYYY-MM-DD");
-        var date2 = this.$moment(this.date[1]).format("YYYY-MM-DD");
+        var date1 = null;
+        var date2 = null;
+        if(this.date!==null){
+          date1 = this.$moment(this.date[0]).format("YYYY-MM-DD");
+          date2 =this.$moment(this.date[1]).format("YYYY-MM-DD");
+
+        }
+     
         var dat = {
-          date1 : this.$moment(this.date[0]).format("YYYY-MM-DD"),
-          date2 : this.$moment(this.date[1]).format("YYYY-MM-DD"),
+          date1 : date1,
+          date2 : date2,
           nomor_transaction : this.no_trans_id,
           plan_name : this.plan_name
 
