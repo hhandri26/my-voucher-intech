@@ -70,15 +70,14 @@
       
     <v-alert type="success">
        Tips Mencetak Voucher <br>
-      1. Pilih tanggal <br>
-      2. Pilih no tx<br>
-      3. Pilih paket voucher<br> 
-      - all vouhcer <br>
-      - sesuai paket polihan<br>
-      4. Pilih search<br>
-      5. Pilih cetak<br>
-      6. Save ke dalam pdf dengan ukuran kertas a4<br>
-      7. Buka file pdf voucher kemudian print<br>
+      1. Pilih tanggal ( masukan tangal dari dan sampai kapan dengan klik langsung di tanggal) atau dikosongkan<br>
+      2. Pilih Paket Voucher atau kosongkan<br>
+      3. Pilih Nomor Transaksi (Harus dipilih)<br>
+      4. Pilih tombol Cari (untuk melihat hasil Filter data)<br>
+      5. Pilih Cetak Voucher<br>
+      6. Pilih Tujuan/Destinaton Print (Save PDF untuk simpan file atau Printer yang terdaftar untuk langsung cetak) <br>
+      7. Pilih setingan lebih/more setings untuk rubah ukuran kertas A4( selain A4 akan terpotong)<br>
+      8. Pilih Save/simpan untuk simpan file atau Print/cetak untuk cetak ke printer<br>
     </v-alert>
         
       <v-app id="inspire">

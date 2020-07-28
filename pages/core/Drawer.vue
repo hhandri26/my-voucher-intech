@@ -268,6 +268,10 @@
                       text : 'User',
                       to    : '/user',
                   },
+                   {
+                      text : 'User Lokasi',
+                      to    : '/user_lokasi',
+                  },
                
                  
                   
@@ -457,6 +461,10 @@
                   {
                       text : 'User',
                       to    : '/user',
+                  },
+                  {
+                      text : 'User Lokasi',
+                      to    : '/user_lokasi',
                   },
                
                  

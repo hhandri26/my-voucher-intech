@@ -129,6 +129,11 @@
                 <v-btn color="primary">Reset</v-btn>
             </template>
           </v-data-table>
+          <v-card-subtitle >
+              Rp. {{count_sub_total | thousand}}
+
+          </v-card-subtitle>
+           
         </v-card>
       </v-app>
     </div>
@@ -207,7 +212,7 @@ export default {
             },
              { text: 'Reseller', value: 'username' },
             { text: 'Jumlah', value: 'qty' },
-             { text: 'Sub Total', value: 'sub_total' },
+             { text: 'Sub Total', value: 'harga' },
               { text: 'Tanggal', value: 'date' },
               { text: 'Status', value: 'status' },
             { text: 'Actions', value: 'actions', sortable: false },
@@ -221,9 +226,7 @@ export default {
               sortable: false,
               value: 'plan_name',
             },
-            { text: 'Harga Voucher', value: 'price' },
-            { text: 'Jumlah', value: 'qty' },
-             { text: 'Sub Total', value: 'sub_total' },
+            { text: 'Kode Voucher', value: 'kode_voucher' },
             
 
           ],
@@ -232,6 +235,12 @@ export default {
         }
     },
     computed:{
+       count_sub_total:function(){
+            var total   = (this.data.reduce((acc, item) => acc + (item.sub_total * 1),0) ) ;
+            this.sub_total = total;
+            return total;
+
+        },
         formTitle () {
         return this.editedIndex === -1 ? 'New' : 'Edit'
       },
@@ -310,7 +319,7 @@ export default {
               excel.set(0, 0, i, value.nomor_transaction);
               excel.set(0, 1, i, value.username);
               excel.set(0, 2, i, value.qty);
-              excel.set(0, 3, i, value.sub_total);
+              excel.set(0, 3, i, value.harga);
               excel.set(0, 4, i, value.date);
               excel.set(0, 5, i, value.status);
               
