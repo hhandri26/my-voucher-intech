@@ -67,20 +67,19 @@
            
            
           </v-card>
-      <v-snackbar
-      v-model="snackbar"
-      :multi-line="multiLine"
       
-    >
-      {{ notif_text }}
-      <v-btn
-        :color="notif_color"
-        notif_text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
+    <v-alert type="success">
+       Tips Mencetak Voucher <br>
+      1. Pilih tanggal <br>
+      2. Pilih no tx<br>
+      3. Pilih paket voucher<br> 
+      - all vouhcer <br>
+      - sesuai paket polihan<br>
+      4. Pilih search<br>
+      5. Pilih cetak<br>
+      6. Save ke dalam pdf dengan ukuran kertas a4<br>
+      7. Buka file pdf voucher kemudian print<br>
+    </v-alert>
         
       <v-app id="inspire">
       <div style="display:none">
@@ -222,7 +221,7 @@ export default {
            date:null,
           plan_name:'',
           no_trans_id:'',
-            snackbar:'',
+            snackbar:true,
           notif_text:'',
           notif_color:'',
           persen:false,
@@ -295,7 +294,7 @@ export default {
                    this.date ="";
                    this.plan_name="";
                    this.plan_name="";
-                no_trans_id
+                this.no_trans_id="";
             }).catch(err => {
             console.log(err);
             })
@@ -315,7 +314,8 @@ export default {
           date1 : date1,
           date2 : date2,
           nomor_transaction : this.no_trans_id,
-          plan_name : this.plan_name
+          plan_name : this.plan_name,
+          user_id : localStorage.userId
 
 
         };
