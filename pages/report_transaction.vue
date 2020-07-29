@@ -258,7 +258,7 @@ export default {
         show(item){
 
        this.dialog2 = true;  
-          axios.get('payment/detail/'+item.nomor_transaction)
+          axios.get('payment/detail_done/'+item.nomor_transaction)
             .then(res => {
               
                 this.detail = res.data.values;   
