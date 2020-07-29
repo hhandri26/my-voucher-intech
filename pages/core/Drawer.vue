@@ -359,6 +359,11 @@
               text     : 'Report',
               subLinks : [
                   
+                   {
+                      text : 'Report Transaksi',
+                      to    : '/report_transaction',
+                  },
+                  
                   {
                       text : 'Penjualan Voucher',
                       to    : '/report',
@@ -367,6 +372,11 @@
                       text : 'Report Sisa Voucher',
                       to    : '/stok_sisa_voucher',
                   },
+                   {
+                      text : 'Report Area Vocuher',
+                      to    : '/report_zona',
+                  },
+               
                
                  
                   

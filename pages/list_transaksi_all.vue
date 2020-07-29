@@ -80,6 +80,7 @@
                                         :src="editedItem.bukti_transfer"
                                         aspect-ratio="1"
                                         class="grey lighten-2"
+                                      
                                         >
                                        
                                     </v-img>
