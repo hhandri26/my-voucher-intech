@@ -261,6 +261,7 @@ export default {
             { text: 'Tanggal', value: 'date' },
             { text: 'Waktu', value: 'time' },
             { text: 'Kode Voucher', value: 'kode_voucher' },
+             { text: 'Lokasi', value: 'lokasi' },
               { text: 'Actions', value: 'actions', sortable: false },
             
 

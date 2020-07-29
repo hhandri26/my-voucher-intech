@@ -180,7 +180,8 @@ export default {
                user_approved : localStorage.userId,
                username:'',
                status:'',
-                 get_voucher:''
+                 get_voucher:'',
+                 lokasi:'',
                 
             },
             defaultItem: {
@@ -195,7 +196,8 @@ export default {
                 user_approved : localStorage.userId,
                 username:'',
                 status:'',
-                get_voucher:''
+                get_voucher:'',
+                lokasi:'',
             },
             multiLine: true,
             snackbar: false,
@@ -313,6 +315,7 @@ export default {
                     var nomor_transaction = item.nomor_transaction;
                     var user_approved = localStorage.userId;
                     var price = item.price;
+                    var lokasi = item.lokasi;
 
                    // console.log(item.nomor_transaction);
                   
@@ -331,7 +334,8 @@ export default {
                                     price : val.price,
                                     id_user :id_user,
                                     nomor_transaction :nomor_transaction,
-                                    secret : val.secret
+                                    secret : val.secret,
+                                    lokasi:lokasi,
 
                                 };
                                 //tag voucher    

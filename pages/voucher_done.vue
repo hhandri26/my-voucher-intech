@@ -118,6 +118,7 @@ export default {
             { text: 'Nama Voucher', value: 'plan_name' },
             { text: 'Harga', value: 'harga' },
             { text: 'Status', value: 'status' },
+             { text: 'Lokasi', value: 'lokasi' },
             { text: 'Kode Voucher', value: 'kode_voucher' },
             
 

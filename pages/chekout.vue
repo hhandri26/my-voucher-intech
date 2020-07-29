@@ -28,6 +28,20 @@
         <v-card-text>
             <vue-numeric currency="Rp" separator="," v-model="count_sub_total" style="font-size: 30px;" disabled></vue-numeric>
         </v-card-text>
+        <v-col cols="12" >
+                               
+          <v-autocomplete
+                  v-model="lokasi_selected"
+                  :items="lokasi"
+                  
+                  color="blue"
+                  hide-no-data
+                  hide-selected
+                  item-text="lokasi"
+                  item-value="lokasi"
+                  label="Lokasi"
+              ></v-autocomplete>
+      </v-col>
          <v-card-text>
           Silahkan Transfer Melalui <br>
           BANK BRI KCP PANGERAN JAYAKARTA JAYAKARTA
@@ -115,7 +129,7 @@
                                 
                                  <v-col cols="8" >
                                      <v-card-text>
-                                        <vue-numeric v-model="editedItem.qty" style="font-size: 20px;"></vue-numeric>
+                                        <vue-numeric v-model="lokasi" style="font-size: 20px;"></vue-numeric>
                                     </v-card-text>
                                
                                
@@ -189,13 +203,18 @@ import axios_payment from '~/plugins/axios_payment'
 import VueNumeric from 'vue-numeric'
   export default {
     name: 'DashboardDashboard',
-   async asyncData({store, error}) {   
+   async asyncData({store, error}) {  
+     let lokasi       = await axios.get('user/lokasi/'+localStorage.userId); 
+      return {
+        lokasi:lokasi.data.values,
+      }
    
        
     },
 
     data () {
       return {
+        lokasi_selected:'',
         dialog2:false,
           multiLine:'',
           snackbar:'',
@@ -397,7 +416,8 @@ import VueNumeric from 'vue-numeric'
           zona      : localStorage.zona,
           qty       : this.total_qty,
           sub_total : this.count_sub_total,
-          email     : localStorage.email
+          email     : localStorage.email,
+          lokasi    : this.lokasi_selected
         };    
         var detail = this.cart;
        

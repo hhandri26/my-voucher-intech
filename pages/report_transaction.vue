@@ -215,6 +215,7 @@ export default {
              { text: 'Sub Total', value: 'harga' },
               { text: 'Tanggal', value: 'date' },
               { text: 'Status', value: 'status' },
+               { text: 'Lokasi', value: 'lokasi' },
             { text: 'Actions', value: 'actions', sortable: false },
             
 
