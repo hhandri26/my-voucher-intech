@@ -75,8 +75,8 @@
       3. Pilih Nomor Transaksi (Harus dipilih)<br>
       4. Pilih tombol Cari (untuk melihat hasil Filter data)<br>
       5. Pilih Cetak Voucher<br>
-      6. Pilih Tujuan/Destinaton Print (Save PDF untuk simpan file atau Printer yang terdaftar untuk langsung cetak) <br>
-      7. Pilih setingan lebih/more setings untuk rubah ukuran kertas A4( selain A4 akan terpotong)<br>
+      6. Pilih Tujuan/Destination Print (Save PDF untuk simpan file atau Printer yang terdaftar untuk langsung cetak) <br>
+      7. Pilih settingan lebih/more setings untuk rubah ukuran kertas A4( selain A4 akan terpotong)<br>
       8. Pilih Save/simpan untuk simpan file atau Print/cetak untuk cetak ke printer<br>
     </v-alert>
         

@@ -46,6 +46,23 @@
                         ></v-autocomplete>
                     </v-col>
                   </v-row>
+                   <v-row>
+                    <v-col cols="3">
+                        Status Transaksi
+                    </v-col>
+                    <v-col cols="4">
+                        <v-autocomplete
+                            v-model="stts"
+                            :items="status"
+                            color="blue"
+                            hide-no-data
+                            hide-selected
+                            item-text="text"
+                            item-value="value"
+                            label="Pilih Status"
+                        ></v-autocomplete>
+                    </v-col>
+                  </v-row>
                   
                   <v-row>
                     <v-col cols="3">
@@ -75,7 +92,24 @@
     <v-dialog v-model="dialog2" width="700">
         <v-card>
           <v-card-title class="headline grey lighten-2" primary-title>Pesanan Anda</v-card-title>
+            <v-col cols="12">
+                <v-img
+                    :src="editedItem.bukti_transfer"
+                    aspect-ratio="1"
+                    class="grey lighten-2"
+                  
+                    >
+                    
+                </v-img>
+            </v-col>
           <v-card-text>
+             <div class="text-center" v-if="loading">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </div>
             <v-data-table
             :headers="headers2"
             :items="detail"
@@ -97,6 +131,14 @@
       </v-dialog>
       <v-app id="inspire">
         <v-card>
+          <v-card-subtitle style="font-size:20px;    background-color: blanchedalmond;" >
+             Total Transaksi Penjualan
+
+          </v-card-subtitle>
+           <v-card-subtitle style="font-size:20px; background-color: blanchedalmond;" >
+              Rp. {{count_sub_total | thousand}}
+
+          </v-card-subtitle>
           <v-card-title>
             List Voucher
             <v-spacer></v-spacer>
@@ -108,6 +150,7 @@
               hide-details
             ></v-text-field>
           </v-card-title>
+           
           <v-data-table
             :headers="headers"
             :items="data"
@@ -129,10 +172,7 @@
                 <v-btn color="primary">Reset</v-btn>
             </template>
           </v-data-table>
-          <v-card-subtitle >
-              Rp. {{count_sub_total | thousand}}
-
-          </v-card-subtitle>
+        
            
         </v-card>
       </v-app>
@@ -165,6 +205,8 @@ export default {
     
     data: function(){
         return {
+          loading:'',
+          stts:'',
           zona:'',
            dialog2:false,
            username:'',
@@ -176,6 +218,7 @@ export default {
                  {text:'Approved', value:'APPROVED'},
                  {text:'Reject', value:'REJECT'},
                  {text:'Pre Order', value:'PO'},
+                 {text:'Paid', value:'PAID'},
              ],
              city:[],
             editedItem: {
@@ -200,6 +243,7 @@ export default {
             notif_color:'',
             notif_text:'',
             detail:[],
+            date:null,
             
 
           search: '',
@@ -257,7 +301,8 @@ export default {
     },
     methods: {
         show(item){
-
+           this.editedIndex = this.data.indexOf(item)
+        this.editedItem = Object.assign({}, item)
        this.dialog2 = true;  
           axios.get('payment/detail_done/'+item.nomor_transaction)
             .then(res => {
@@ -270,12 +315,19 @@ export default {
 
       },
       do_search(){
-         var date1 = this.$moment(this.date[0]).format("YYYY-MM-DD");
-          var date2 = this.$moment(this.date[1]).format("YYYY-MM-DD");
+         this.loading = true;
+        var date1 = null;
+        var date2 = null;
+        if(this.date!==null){
+          date1 = this.$moment(this.date[0]).format("YYYY-MM-DD");
+          date2 =this.$moment(this.date[1]).format("YYYY-MM-DD");
+
+        }
           
-          axios.post('transaction_report',{date1:date1,date2:date2,username:this.username,zona:this.zona})
+          axios.post('transaction_report',{date1:date1,date2:date2,username:this.username,zona:this.zona,status:this.stts})
             .then(res => {
-                  this.data   = res.data.values;               
+                  this.data   = res.data.values; 
+                  this.loading = false;              
                 
             }).catch(err => {
             console.log(err);
@@ -291,7 +343,8 @@ export default {
       },
    
       close () {
-        this.dialog = false
+        this.dialog = false;
+        this.detail = [];
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1

@@ -340,10 +340,7 @@
               icon     : 'mdi-file-document-edit',
               text     : 'Approval',
               subLinks : [
-                {
-                      text : 'Validasi Bukti transfer',
-                      to    : '/list_transaksi_all',
-                  },
+              
                   {
                       text : 'Status Transaksi',
                       to    : '/list_transaksi_all_change',
