@@ -168,5 +168,19 @@ export const actions={
         return status;        
         
     },
+
+    async user_lokasi_save ( {commit}, { dat} ){
+        let status = '';
+        try {
+            await axios.post('/user/lokasi',dat).then((response)=>{
+                status = response.data.status;
+                
+            });
+        }catch (e) {
+            status = 'field';
+        }
+        return status;        
+        
+    },
   
 }
