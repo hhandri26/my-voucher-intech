@@ -32,6 +32,17 @@
       </v-dialog>
       <v-app id="inspire">
         <v-card>
+            <v-alert type="warning">
+      Tips Upload Bukti Transfer <br>
+1. Pilih Nomor Transaksi Topup voucher sesuai pembelian <br>
+2. Status Transaksi awal transaksi "WAITING" <br>
+3. Upload bukti transfer dengan klik Tombol upload  <br>
+4. Pilih foto bukti transfer atau upload dari file dokumen yang di simpan <br>
+5. Pastikan bukti Transfer sesuai, kemudian klik save <br>
+6. Status transaksi berubah menjadi "UPLOAD" <br>
+7. Prosess approval selama +- 10 menit <br>
+8. transaksi yang sudah berhasil berubah statusnya menjadi "APPROVED" <br>
+    </v-alert>
           <v-card-title>
             List Transaksi
             <v-spacer></v-spacer>
