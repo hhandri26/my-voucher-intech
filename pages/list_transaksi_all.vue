@@ -64,7 +64,7 @@
                     vertical
                     ></v-divider>
                     <v-spacer></v-spacer>
-                    <v-dialog v-model="dialog" max-width="500px">
+                    <v-dialog v-model="dialog" width="800px">
                   
                     <v-card>
                         <v-card-title>
@@ -78,8 +78,9 @@
                                 <v-col cols="12">
                                     <v-img
                                         :src="editedItem.bukti_transfer"
-                                        aspect-ratio="1"
+                                      
                                         class="grey lighten-2"
+                                        width="auto"
                                       
                                         >
                                        
