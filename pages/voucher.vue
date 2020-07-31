@@ -46,6 +46,23 @@
                         ></v-autocomplete>
                     </v-flex>
                   </v-row>
+                   <v-row>
+                    <v-flex xs6 md6>
+                        Lokasi
+                    </v-flex>
+                    <v-flex xs6 md6>
+                        <v-autocomplete
+                            v-model="lokasi_user"
+                            :items="lokasi"
+                            color="blue"
+                            hide-no-data
+                            hide-selected
+                            item-text="lokasi"
+                            item-value="lokasi"
+                            label="Pilih Lokasi"
+                        ></v-autocomplete>
+                    </v-flex>
+                  </v-row>
                   
                   <v-row>
                     <v-flex xs12 md12>
@@ -84,9 +101,10 @@
       <div style="display:none">
         <div class="container" id="print" ref="printMe" >
            <v-flex xs12 md12>
-              <div style="width: 21cm; padding: 20px; margin: 1cm auto; border-radius: 5px; background: white;text-align: center;padding-left: 70px;">
+              <div style="width: 21cm; padding: 20px; border-radius: 5px; background: white;text-align: center;padding-left: 70px;">
                 <div v-for="(item, i) in data" :key="i" style="min-width: 110px;float: left; border: solid 1px;">
                   <div style="width: 150px;background-color: rgb(255, 255, 255);text-align: center;height: 30px;font-size: 12px;position: absolute;display: table;">{{ item.plan_name}}</div>
+                  <div style="width: 150px;text-align: center;height: 70px; padding-top: 30px;font-size: 12px;position: absolute;display: table;">RP. {{ item.price | thousand}}</div>
                   <img src="~assets/Voucher.png" width="145">
                   <div style="width: 100%;background-color: #fff;text-align: center;height: 20px;font-size: 15px;">{{item.kode_voucher}}</div>
 
@@ -205,10 +223,12 @@ export default {
     let data       = await axios.get('voucher_done/' + localStorage.userId);
     let no_trans  = await axios.get('voucher_no_transaction/' + localStorage.userId);
     let plan_name_data  = await axios.get('voucher_plan_name/' + localStorage.userId);
+    let lokasi  = await axios.get('user/lokasi/' + localStorage.userId);
       return {
         data:data.data.values,
         no_trans:no_trans.data.values,
-        plan_name_data : plan_name_data.data.values
+        plan_name_data : plan_name_data.data.values,
+        lokasi : lokasi.data.values
       }
        
     },
@@ -216,6 +236,7 @@ export default {
     
     data: function(){
         return {
+          lokasi_user:'',
            loading:false,
            date:null,
           plan_name:'',
@@ -315,7 +336,8 @@ export default {
           date2 : date2,
           nomor_transaction : this.no_trans_id,
           plan_name : this.plan_name,
-          user_id : localStorage.userId
+          user_id : localStorage.userId,
+          lokasi_user: this.lokasi_user
 
 
         };
