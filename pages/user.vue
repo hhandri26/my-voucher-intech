@@ -87,6 +87,20 @@
                                         label="Role"
                                     ></v-autocomplete>
                             </v-col>
+                              <v-col cols="12" >
+                               
+                                <v-autocomplete
+                                        v-model="editedItem.cetak_harga"
+                                        :items="ctk"
+                                       
+                                        color="blue"
+                                        hide-no-data
+                                        hide-selected
+                                        item-text="text"
+                                        item-value="VALUE"
+                                        label="Cetak Harga "
+                                    ></v-autocomplete>
+                            </v-col>
                             <v-col cols="12" >
                                
                                 <v-autocomplete
@@ -182,6 +196,11 @@ export default {
                  {role_code:'NOC', role_name:'Noc'},
                  {role_code:'PIC', role_name:'Pic'},
             ],
+            ctk:[
+              {text:'Ya',value:'Ya'},
+              {text:'Tidak',value:'Tidak'}
+
+            ],
               rules: {
                 email: v => (v || '').match(/@/) || 'Please enter a valid email',
                 length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
@@ -200,7 +219,8 @@ export default {
                 role:'',
                 phone_number:'',
                 status:'',
-                real_password:''
+                real_password:'',
+                cetak_harga:''
                 
             },
             defaultItem: {
@@ -210,7 +230,8 @@ export default {
                 role:'',
                 phone_number:'',
                 status:'',
-                real_password:''
+                real_password:'',
+                cetak_harga:''
             },
             multiLine: true,
             snackbar: false,

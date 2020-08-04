@@ -45,6 +45,7 @@ export const actions={
                     localStorage.setItem("role",response.data.values[0].role);
                     localStorage.setItem("zona",response.data.values[0].zona);
                     localStorage.setItem("email",response.data.values[0].email);
+                    localStorage.setItem("cetak_harga",response.data.values[0].cetak_harga);
                     status = 200;
                     let dat ={
                         status : status
