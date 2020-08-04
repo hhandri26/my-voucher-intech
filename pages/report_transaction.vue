@@ -260,6 +260,7 @@ export default {
               { text: 'Tanggal', value: 'date' },
               { text: 'Status', value: 'status' },
                { text: 'Lokasi', value: 'lokasi' },
+                 { text: 'User Approve', value: 'approved_by' },
             { text: 'Actions', value: 'actions', sortable: false },
             
 
