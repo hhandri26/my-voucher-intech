@@ -103,13 +103,7 @@
                 </v-img>
             </v-col>
           <v-card-text>
-             <div class="text-center" v-if="loading">
-            <v-progress-circular
-              :size="50"
-              color="primary"
-              indeterminate
-            ></v-progress-circular>
-          </div>
+           
             <v-data-table
             :headers="headers2"
             :items="detail"
@@ -150,6 +144,13 @@
               hide-details
             ></v-text-field>
           </v-card-title>
+            <div class="text-center" v-if="loading">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </div>
            
           <v-data-table
             :headers="headers"
@@ -205,7 +206,7 @@ export default {
     
     data: function(){
         return {
-          loading:'',
+          loading:false,
           stts:'',
           zona:'',
            dialog2:false,
@@ -259,7 +260,7 @@ export default {
              { text: 'Sub Total', value: 'harga' },
               { text: 'Tanggal', value: 'date' },
               { text: 'Status', value: 'status' },
-               { text: 'Lokasi', value: 'lokasi' },
+               { text: 'Lokasi', value: 'lok' },
                  { text: 'User Approve', value: 'approved_by' },
             { text: 'Actions', value: 'actions', sortable: false },
             
@@ -357,7 +358,7 @@ export default {
           var evenRow = excel.addStyle({ border: "none,none,none,thin #333333" });
           var oddRow = excel.addStyle({ fill: "#ECECEC", border: "none,none,none,thin #333333" });
 
-          var headers = ["Nomor Transaksi", "Reseller", "Jumlah", "Sub Total","Tanggal","Status"];
+          var headers = ["Nomor Transaksi", "Reseller", "Jumlah", "Sub Total","Tanggal","Status","lokasi","approved by"];
 
           for (var i = 0; i < headers.length; i++) {                       
             // Loop headers
@@ -377,6 +378,8 @@ export default {
               excel.set(0, 3, i, value.harga);
               excel.set(0, 4, i, value.date);
               excel.set(0, 5, i, value.status);
+              excel.set(0, 6, i, value.lok);
+              excel.set(0, 7, i, value.approved_by);
               
               i = i + 1;
           });

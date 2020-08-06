@@ -59,6 +59,13 @@
               hide-details
             ></v-text-field>
           </v-card-title>
+            <div class="text-center" v-if="loading">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </div>
           <v-data-table
             :headers="headers"
             :items="data"
@@ -101,6 +108,7 @@ export default {
     
     data: function(){
         return {
+          loading:false,
           persen:false,
             dialog: false,
              editedIndex: -1,
@@ -130,7 +138,7 @@ export default {
             { text: 'Nama Voucher', value: 'plan_name' },
             { text: 'Harga', value: 'harga' },
              { text: 'Tanggal', value: 'date' },
-              { text: 'Lokasi', value: 'lokasi' },
+              { text: 'Lokasi', value: 'lok' },
             { text: 'Kode Voucher', value: 'kode_voucher' },
             
 
@@ -151,11 +159,13 @@ export default {
     },
     methods: {
       do_search(){
+        this.loading = true;
           var date1 = this.$moment(this.date[0]).format("YYYY-MM-DD");
           var date2 = this.$moment(this.date[1]).format("YYYY-MM-DD");
           axios.post('voucher_report',{date1:date1,date2:date2,username:this.username})
             .then(res => {
-                  this.data   = res.data.values;               
+                  this.data   = res.data.values; 
+                    this.loading = false;              
                 
             }).catch(err => {
             console.log(err);
@@ -168,7 +178,7 @@ export default {
           var evenRow = excel.addStyle({ border: "none,none,none,thin #333333" });
           var oddRow = excel.addStyle({ fill: "#ECECEC", border: "none,none,none,thin #333333" });
 
-          var headers = ["Nomor Transaksi", "Voucher Id", "reseller", "Nama Voucher","Harga","Tanggal","Kode Voucher"];
+          var headers = ["Nomor Transaksi", "Voucher Id", "reseller", "Nama Voucher","Harga","Tanggal","Kode Voucher","lokasi"];
 
           for (var i = 0; i < headers.length; i++) {                       
             // Loop headers
@@ -189,6 +199,7 @@ export default {
               excel.set(0, 4, i, value.price);
               excel.set(0, 5, i, value.date);
               excel.set(0, 6, i, value.kode_voucher);
+              excel.set(0, 7, i, value.lok);
               
               i = i + 1;
           });
