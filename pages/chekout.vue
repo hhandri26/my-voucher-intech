@@ -444,29 +444,38 @@ import VueNumeric from 'vue-numeric'
   
      
        payment:function(){
+        if(this.lokasi_selected!==''){
+              var header = {
+              id_user   : localStorage.userId,
+              zona      : localStorage.zona,
+              qty       : this.total_qty,
+              sub_total : this.count_sub_total,
+              email     : localStorage.email,
+              lokasi    : this.lokasi_selected
+            };    
+            var detail = this.cart;
           
-        var header = {
-          id_user   : localStorage.userId,
-          zona      : localStorage.zona,
-          qty       : this.total_qty,
-          sub_total : this.count_sub_total,
-          email     : localStorage.email,
-          lokasi    : this.lokasi_selected
-        };    
-        var detail = this.cart;
-       
-        this.$store.dispatch('transaction_save', {header,detail}).then((res) => {
-            
-            if(res == 200){
-                this.notif_color ='blue';
-                this.notif_text ='Silahkan Upload Bukti Transfer !';
-                this.snackbar = true;
-                this.dialog = false;
-                this.cart = [];
-                localStorage.removeItem("cart");
-                 
-            }
-        })
+            this.$store.dispatch('transaction_save', {header,detail}).then((res) => {
+                
+                if(res == 200){
+                    this.notif_color ='blue';
+                    this.notif_text ='Silahkan Upload Bukti Transfer !';
+                    this.snackbar = true;
+                    this.dialog = false;
+                    this.cart = [];
+                    localStorage.removeItem("cart");
+                    
+                }
+            })
+
+        }else{
+          this.notif_color ='red';
+          this.notif_text ='Silahkan pilih lokasi terlebidahulu !';
+          this.snackbar = true;
+                    
+
+        }  
+        
             
         
       
