@@ -292,6 +292,7 @@ import VueNumeric from 'vue-numeric'
     },
     mounted() {
         var cart = JSON.parse(localStorage.getItem("cart"));
+        var arr = [];
         if(cart !== null){
            Object.entries(cart).forEach(([key, val]) => {
             var data= {
@@ -305,14 +306,46 @@ import VueNumeric from 'vue-numeric'
             harga         :this.$options.filters.thousand(val.price)
 
         }
-        this.cart.push(data);
+        arr.push(data);
           
            
         
             
         });
+        var result = arr.reduce(function(acc, x) {
+        var id = acc[x.name_plan]
+          if (id) {
+            id.qty += x.qty
+            id.subtotal += x.subtotal
+          } else {
+            acc[x.name_plan] = x
+            delete x.name_plan
+          }
+          return acc
+        },{})
 
         }
+        console.log(result)
+            Object.entries(result).forEach(([key, val]) => {
+            var dat= {
+            price         :val.price,
+            name_plan     :key,
+            bw_name       :val.bw_name,
+            validity      :val.validity,
+            validity_unit :val.validity_unit,
+            qty           :val.qty,
+            subtotal      :val.subtotal,
+            harga         :this.$options.filters.thousand(val.price)
+
+        }
+         this.cart.push(dat);
+          
+           
+        
+            
+        });
+       
+       
         
        
     },

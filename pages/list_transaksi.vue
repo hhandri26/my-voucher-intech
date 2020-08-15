@@ -168,7 +168,8 @@ export default {
                nomor_transaction:'',
                 harga:'',
                 status:'',
-                username:''
+                username:'',
+                lokasi:'',
                 
             },
             defaultItem: {
@@ -177,7 +178,8 @@ export default {
               nomor_transaction:'',
               harga:'',
               status:'',
-              username:''
+              username:'',
+              lokasi:'',
             },
             multiLine: true,
             snackbar: false,

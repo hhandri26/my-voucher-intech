@@ -327,7 +327,7 @@ export default {
                       
                       Object.entries(response.data.values).forEach(([key, val]) => {
                             if(item.status == 'APPROVED' || item.status == 'PO'  ){
-                            axios.post('voucher/list',{plan_name:val.plan_name,qty:val.qty}).then(res2 => {
+                            axios.post('voucher/list',{plan_name:val.plan_name,qty:val.qty,owner_name:val.zona}).then(res2 => {
                               
                                 Object.entries(res2.data.values).forEach(([key, val]) => {
                                 var dat = {
