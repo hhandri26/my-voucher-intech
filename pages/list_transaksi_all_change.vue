@@ -104,6 +104,14 @@
       </v-dialog>
       <v-app id="inspire">
         <v-card>
+          <v-card-subtitle style="font-size:20px;    background-color: blanchedalmond;" >
+             Total Transaksi Penjualan
+
+          </v-card-subtitle>
+           <v-card-subtitle style="font-size:20px; background-color: blanchedalmond;" >
+              Rp. {{count_sub_total | thousand}}
+
+          </v-card-subtitle>
           <v-card-title>
             List Transaksi
             <v-spacer></v-spacer>
@@ -276,7 +284,7 @@ export default {
              { text: 'Tanggal', value: 'date' },
              { text: 'Reseller', value: 'username' },
             { text: 'Jumlah', value: 'qty' },
-             { text: 'Sub Total', value: 'sub_total' },
+             { text: 'Sub Total', value: 'harga' },
               { text: 'Status', value: 'status' },
             { text: 'Actions', value: 'actions', sortable: false },
             
@@ -300,6 +308,12 @@ export default {
         }
     },
     computed:{
+      count_sub_total:function(){
+            var total   = (this.data.reduce((acc, item) => acc + (item.sub_total * 1),0) ) ;
+            this.sub_total = total;
+            return total;
+
+        },
         formTitle () {
         return this.editedIndex === -1 ? 'New' : 'Edit'
       },
