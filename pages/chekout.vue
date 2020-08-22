@@ -130,7 +130,7 @@
                                 
                                  <v-col cols="8" >
                                      <v-card-text>
-                                        <vue-numeric v-model="lokasi" style="font-size: 20px;"></vue-numeric>
+                                        <vue-numeric v-model="editedItem.qty" style="font-size: 20px;"></vue-numeric>
                                     </v-card-text>
                                
                                
