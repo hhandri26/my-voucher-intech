@@ -289,6 +289,17 @@ export default {
            this.$store.dispatch('upload_bukti_transfer', {item}).then((res) => {
                 
                 if(res == 200){
+                   var dat1={                               
+                      message: 'Approve top up voucher reseller '+ item.username +' dengan nomor Transkasi '+item.nomor_transaction +' Senilai Rp.'+item.harga +' Lokasi '+item.lokasi,
+                      phone:'628118498896'
+                    };
+                    axios.post('http://45.130.229.242:3030/whatsapp/sendmessage/',dat1)
+                    .then(res => {
+                                      
+                    }).catch(err => {
+                    console.log(err);
+                    })
+
                     this.notif_color ='blue';
                     this.notif_text ='Berhasil Upload bukti Transfer !';
                     this.snackbar = true;
