@@ -198,6 +198,7 @@ export default {
             { text: 'Jumlah', value: 'qty' },
              { text: 'Sub Total', value: 'harga' },
               { text: 'Status', value: 'status' },
+              { text: 'Lokasi', value: 'lokasi' },
                { text: 'Tanggal', value: 'date' },
              { text: 'Waktu', value: 'time' },
             { text: 'Actions', value: 'actions', sortable: false },
