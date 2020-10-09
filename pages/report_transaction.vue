@@ -252,7 +252,6 @@ export default {
             {
               text: 'Nomor Transaksi',
               align: 'start',
-              sortable: false,
               value: 'nomor_transaction',
             },
              { text: 'Reseller', value: 'username' },
