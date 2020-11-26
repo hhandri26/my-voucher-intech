@@ -294,7 +294,7 @@ export default {
                       message: 'Approve top up voucher reseller '+ item.username +' dengan nomor Transkasi '+item.nomor_transaction +' Senilai Rp.'+item.harga +' Lokasi '+item.lokasi,
                       phone:'628118498896'
                     };
-                    axios.post('http://45.130.229.242:3030/whatsapp/sendmessage/',dat1)
+                    axios.post('whatsapp/send_message/',dat1)
                     .then(res => {
                                       
                     }).catch(err => {
