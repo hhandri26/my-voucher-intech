@@ -103,10 +103,10 @@
            <v-flex xs12 md12>
               <div style="width: 21cm; padding: 20px; border-radius: 5px; background: white;text-align: center;padding-left: 70px;">
                 <div v-for="(item, i) in data" :key="i" style="min-width: 110px;float: left; border: solid 1px;">
-                  <div style="width: 170px;background-color: rgb(255, 255, 255);text-align: center;height: 30px;font-size: 12px;position: absolute;display: table;">{{ item.plan_name}} {{item.date}}</div>
-                  <div v-if="cetak_harga =='Ya'" style="width: 187.5 px;text-align: center;height: 70px; padding-top: 30px;font-size: 12px;position: absolute;display: table;">RP. {{ item.price | thousand}}</div>
+                  <div style="width: 170px;background-color: rgb(255, 255, 255);text-align: center;height: 30px;font-size: 15px;position: absolute;display: table;">{{ item.plan_name}} {{item.date}}</div>
+                  <div v-if="cetak_harga =='Ya'" style="width: 187.5 px;text-align: center;height: 70px; padding-top: 30px;font-size: 15px;position: absolute;display: table;">RP. {{ item.price | thousand}}</div>
                   <img src="~assets/Voucher.png" width="175">
-                  <div style="width: 100%;background-color: #fff;text-align: center;height: 20px;font-size: 15px;">{{item.kode_voucher}}</div>
+                  <div style="width: 100%;background-color: #fff;text-align: center;height: 20px;font-size: 20px;">{{item.kode_voucher}}</div>
 
                 </div>
               </div>
@@ -220,7 +220,7 @@ import 'vue2-datepicker/index.css';
 export default {
    middleware: 'auth',
    async asyncData({store, error}) {   
-    let data       = await axios.get('voucher_done/' + localStorage.userId);
+    let data       = await axios.get('voucher_limit/' + localStorage.userId);
     let no_trans  = await axios.get('voucher_no_transaction/' + localStorage.userId);
     let plan_name_data  = await axios.get('voucher_plan_name/' + localStorage.userId);
     let lokasi  = await axios.get('user/lokasi/' + localStorage.userId);
