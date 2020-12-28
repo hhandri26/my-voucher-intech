@@ -130,7 +130,7 @@
 
           </v-card-subtitle>
            <v-card-subtitle style="font-size:20px; background-color: blanchedalmond;" >
-              Rp. {{count_sub_total | thousand}}
+              Rp. {{total | thousand}}
 
           </v-card-subtitle>
           <v-card-title>
@@ -195,10 +195,12 @@ export default {
     let data       = await axios.get('payment_all');
         let user       = await axios.get('users');
     let area       = await axios.get('voucher/area');
+        let total       = await axios.get('transaction/count_total');
       return {
         data:data.data.values,
            user:user.data.values,
-        area:area.data.values
+        area:area.data.values,
+         total:total.data.values[0].total
       }
        
     },

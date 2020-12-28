@@ -109,7 +109,7 @@
 
           </v-card-subtitle>
            <v-card-subtitle style="font-size:20px; background-color: blanchedalmond;" >
-              Rp. {{count_sub_total | thousand}}
+              Rp. {{total | thousand}}
 
           </v-card-subtitle>
           <v-card-title>
@@ -219,9 +219,11 @@ export default {
    async asyncData({store, error}) {   
     let data       = await axios.get('payment_finance');
      let user       = await axios.get('users');
+      let total       = await axios.get('transaction/count_total');
       return {
         data:data.data.values,
          user:user.data.values,
+         total:total.data.values[0].total
       }
        
     },
