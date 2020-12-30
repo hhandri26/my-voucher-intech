@@ -126,13 +126,22 @@
       <v-app id="inspire">
         <v-card>
           <v-card-subtitle style="font-size:20px;    background-color: blanchedalmond;" >
-             Total Transaksi Penjualan
+             Total Transaksi Semua Penjualan
 
           </v-card-subtitle>
            <v-card-subtitle style="font-size:20px; background-color: blanchedalmond;" >
               Rp. {{total | thousand}}
 
           </v-card-subtitle>
+           <v-card-subtitle style="font-size:20px;    background-color: blanchedalmond;" >
+             Total Transksi Pencarian
+
+          </v-card-subtitle>
+           <v-card-subtitle style="font-size:20px; background-color: blanchedalmond;" >
+              Rp. {{count_sub_total | thousand}}
+
+          </v-card-subtitle>
+          
           <v-card-title>
             List Voucher
             <v-spacer></v-spacer>
